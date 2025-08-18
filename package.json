@@ -1,0 +1,32 @@
+{
+  "name": "cisco-secure-client-portal",
+  "version": "1.0.0",
+  "description": "Cisco Secure Client",
+  "main": "server.js",
+  "bin": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "build": "pkg ."
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "multer": "^1.4.5-lts.1"
+  },
+  "pkg": {
+    "targets": ["linux-x64", "win-x64"],
+    "outputPath": "dist",
+    "assets": [
+      "public/index.html",
+      "public/admin.html",
+      "public/css",
+      "public/js",
+      "public/img",
+      "public/fonts",
+      "public/**/*",
+      "uploads/**/*"
+    ]
+  }
+}
