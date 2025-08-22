@@ -14,15 +14,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 // 配置body-parser解析JSON请求体
 app.use(bodyParser.json());
 
-// 配置multer用于文件上传
+// 配置multer用于文件上传（修改上传路径和文件名规则）
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, 'public', 'img', 'qrcodes'));
+    // 上传路径修改为 /public/img（移除qrcodes子目录）
+    cb(null, path.join(__dirname, 'public', 'img'));
   },
   filename: function (req, file, cb) {
-    const type = req.body.type || 'unknown';
-    const ext = path.extname(file.originalname);
-    cb(null, `${type}-qr${ext}`);
+    // 保留原始文件名（不进行重命名）
+    cb(null, file.originalname);
   }
 });
 
@@ -35,7 +35,7 @@ const dataPath = path.join(__dirname, 'data.json');
 const initialData = {
   admin: {
     username: 'admin',
-    password: '$2b$10$VYJQfQpQ9Y5Y5Y5Y5Y5Y5e7uXQZJZJZJZJZJZJZJZJZJZJZJZJZJ' // 密码是 'admin' 的哈希
+    password: '$2b$10$VYJQfQpQ9Y5Y5Y5Y5Y5Y5e7uXQZJZJZJZJZJZJZJZJZJZJZJZJ' // 密码是 'admin' 的哈希
   },
   texts: {
     title: 'Cisco Secure Client',
@@ -194,7 +194,7 @@ app.post('/api/update-manuals', (req, res) => {
   }
 });
 
-// 上传二维码
+// 上传二维码（修改路径存储逻辑）
 app.post('/api/upload-qr', upload.single('qrImage'), (req, res) => {
   if (!req.file) {
     return res.json({ success: false, message: '未上传文件' });
@@ -204,7 +204,8 @@ app.post('/api/upload-qr', upload.single('qrImage'), (req, res) => {
   const data = readData();
   
   if (type === 'ios' || type === 'android') {
-    data.qrcodes[type] = `img/qrcodes/${req.file.filename}`;
+    // 存储路径更新为 img/原始文件名（因上传到了public/img目录）
+    data.qrcodes[type] = `img/${req.file.originalname}`;
     
     if (saveData(data)) {
       return res.json({ 
@@ -280,4 +281,3 @@ app.get('*', (req, res) => {
 app.listen(PORT, () => {
   console.log(`服务器运行在 http://localhost:${PORT}`);
 });
-    
