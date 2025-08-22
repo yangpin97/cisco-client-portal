@@ -1,6 +1,6 @@
 # Cisco-Client-Portal
 
-通过简单的命令搭建一个Cisco Secure Client 下载导航页，支持Docker、Linux二进制、Windwos系统直接运行。
+通过简单的命令搭建一个Cisco Secure Client 下载导航页。
 
 data.json
 初始数据文件
