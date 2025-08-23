@@ -5,7 +5,7 @@
   },
   "texts": {
     "title": "Cisco Secure Client",
-    "subtitle": "安全连接，无处不在。下载适用于您设备的Cisco Secure Client客户端，轻松建立安全连接。",
+    "subtitle": "安全连接，无处不在，下载适用于您设备的Cisco Secure Client客户端，轻松建立安全连接。",
     "downloadSectionTitle": "选择您的平台下载",
     "iosButtonText": "iOS",
     "androidButtonText": "Android"
@@ -38,8 +38,8 @@
     "android": ""
   },
   "qrcodes": {
-    "ios": "img/ios-qr.png",
-    "android": "img/android-qr.png"
+    "ios": "",
+    "android": ""
   },
   "otherClients": []
 }
