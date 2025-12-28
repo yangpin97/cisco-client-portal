@@ -45,6 +45,12 @@
             .btn-hover {
                 @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5;
             }
+            .nav-link {
+                @apply block px-4 py-2 rounded-lg text-neutral-600 hover:bg-neutral-100 hover:text-primary transition-colors cursor-pointer;
+            }
+            .nav-link.active {
+                @apply bg-primary/10 text-primary font-medium;
+            }
         }
     </style>
 </head>
@@ -91,8 +97,11 @@
                     <h1 class="text-xl font-bold">管理后台</h1>
                 </div>
                 <div class="flex items-center space-x-4">
+                    <button id="saveAllBtnTop" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm btn-hover flex items-center">
+                        <i class="fa fa-save mr-2"></i> 保存所有
+                    </button>
                     <button id="logoutBtn" class="bg-neutral-200 hover:bg-neutral-300 text-neutral-800 px-4 py-2 rounded-lg text-sm btn-hover">
-                        <i class="fa fa-sign-out mr-1"></i> 退出登录
+                        <i class="fa fa-sign-out mr-1"></i> 退出
                     </button>
                 </div>
             </div>
@@ -100,315 +109,747 @@
         
         <!-- 主内容 -->
         <main class="container mx-auto px-4 py-8">
-            <!-- 保存所有按钮 -->
-            <div class="mb-8 text-right">
-                <button id="saveAllBtn" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-medium btn-hover flex items-center ml-auto">
-                    <i class="fa fa-save mr-2"></i> 保存所有修改
-                </button>
-            </div>
-            
-            <!-- 管理员信息设置 -->
-            <div class="bg-white rounded-2xl shadow-lg p-6 mb-8 border border-neutral-200">
-                <h3 class="text-xl font-bold mb-6 flex items-center">
-                    <i class="fa fa-user-circle mr-2"></i> 管理员信息设置
-                </h3>
-                <form id="adminForm" class="space-y-6">
-                    <div>
-                        <label for="adminUsername" class="block text-sm font-medium text-neutral-700 mb-1">用户名</label>
-                        <input type="text" id="adminUsername" name="adminUsername" required
-                            class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label for="oldPassword" class="block text-sm font-medium text-neutral-700 mb-1">原密码</label>
-                            <input type="password" id="oldPassword" name="oldPassword"
-                                class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
-                        </div>
-                        <div>
-                            <label for="newPassword" class="block text-sm font-medium text-neutral-700 mb-1">新密码（留空则不修改）</label>
-                            <input type="password" id="newPassword" name="newPassword"
-                                class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
-                        </div>
-                    </div>
-                    <button type="submit" class="btn-hover bg-primary text-white py-2 px-6 rounded-lg font-medium flex items-center">
-                        <i class="fa fa-user-edit mr-2"></i> 更新管理员信息
-                    </button>
-                    <p id="adminUpdateMessage" class="hidden mt-4 p-3 rounded-lg text-center"></p>
-                </form>
-            </div>
-            
-            <!-- 文本内容设置 -->
-            <div class="bg-white rounded-2xl shadow-lg p-6 mb-8 border border-neutral-200">
-                <h3 class="text-xl font-bold mb-6 flex items-center">
-                    <i class="fa fa-font mr-2"></i> 文本内容设置
-                </h3>
-                <form id="textsForm" class="space-y-6">
-                    <div>
-                        <label for="titleText" class="block text-sm font-medium text-neutral-700 mb-1">主标题</label>
-                        <input type="text" id="titleText" name="titleText" required
-                            class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
-                    </div>
-                    <div>
-                        <label for="subtitleText" class="block text-sm font-medium text-neutral-700 mb-1">副标题</label>
-                        <input type="text" id="subtitleText" name="subtitleText" required
-                            class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
-                    </div>
-                    <div>
-                        <label for="downloadSectionTitleText" class="block text-sm font-medium text-neutral-700 mb-1">下载区域标题</label>
-                        <input type="text" id="downloadSectionTitleText" name="downloadSectionTitleText" required
-                            class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label for="iosButtonText" class="block text-sm font-medium text-neutral-700 mb-1">iOS 按钮文本</label>
-                            <input type="text" id="iosButtonText" name="iosButtonText" required
-                                class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
-                        </div>
-                        <div>
-                            <label for="androidButtonText" class="block text-sm font-medium text-neutral-700 mb-1">Android 按钮文本</label>
-                            <input type="text" id="androidButtonText" name="androidButtonText" required
-                                class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
-                        </div>
-                    </div>
-<!--                    <h4 class="font-semibold text-lg mt-8 mb-4">手册链接文本</h4> -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <div>
-                            <label for="manualWindowsText" class="block text-sm font-medium text-neutral-700 mb-1">Windows 手册文本</label>
-                            <input type="text" id="manualWindowsText" name="manualWindowsText" required
-                                class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
-                        </div>
-                        <div>
-                            <label for="manualMacOSText" class="block text-sm font-medium text-neutral-700 mb-1">macOS 手册文本</label>
-                            <input type="text" id="manualMacOSText" name="manualMacOSText" required
-                                class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
-                        </div>
-                        <div>
-                            <label for="manualLinuxText" class="block text-sm font-medium text-neutral-700 mb-1">Linux 手册文本</label>
-                            <input type="text" id="manualLinuxText" name="manualLinuxText" required
-                                class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
-                        </div>
-                        <div>
-                            <label for="manualIOSText" class="block text-sm font-medium text-neutral-700 mb-1">iOS 手册文本</label>
-                            <input type="text" id="manualIOSText" name="manualIOSText" required
-                                class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
-                        </div>
-                        <div>
-                            <label for="manualAndroidText" class="block text-sm font-medium text-neutral-700 mb-1">Android 手册文本</label>
-                            <input type="text" id="manualAndroidText" name="manualAndroidText" required
-                                class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
-                        </div>
-                    </div>
-                    <button type="submit" class="btn-hover bg-primary text-white py-2 px-6 rounded-lg font-medium flex items-center">
-                        <i class="fa fa-save mr-2"></i> 更新文本内容
-                    </button>
-                    <p id="textsUpdateMessage" class="hidden mt-4 p-3 rounded-lg text-center"></p>
-                </form>
-            </div>
-           
-            <!-- 下载链接设置 -->
-            <div class="bg-white rounded-2xl shadow-lg p-6 mb-8 border border-neutral-200">
-                <h3 class="text-xl font-bold mb-6 flex items-center">
-                    <i class="fa fa-download mr-2"></i> 下载链接设置
-                </h3>
-                <form id="downloadsForm" class="space-y-6">
-                    <div class="bg-neutral-50 p-4 rounded-xl">
-                        <h4 class="font-semibold text-lg mb-4">Windows</h4>
-                        <div class="space-y-4">
-                            <div>
-                                <label for="windowsAmdLink" class="block text-sm font-medium text-neutral-700 mb-1">AMD64 架构下载链接</label>
-                                <input type="url" id="windowsAmdLink" name="windowsAmdLink"
-                                    class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
-                            </div>
-                            <div>
-                                <label for="windowsArmLink" class="block text-sm font-medium text-neutral-700 mb-1">ARM64 架构下载链接</label>
-                                <input type="url" id="windowsArmLink" name="windowsArmLink"
-                                    class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
-                            </div>
-                        </div>
-                    </div>
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+                <!-- 左侧侧边栏导航 -->
+                <aside class="hidden md:block md:col-span-3 lg:col-span-2">
+                    <nav class="sticky top-24 space-y-1">
+                        <a href="#adminInfo" class="nav-link active">
+                            <i class="fa fa-user-circle w-6 text-center"></i> 管理员信息设置
+                        </a>
+                        <a href="#headerNavSettings" class="nav-link">
+                            <i class="fa fa-compass w-6 text-center"></i> 顶部导航设置
+                        </a>
+                        <a href="#bannerSettings" class="nav-link">
+                            <i class="fa fa-bullhorn w-6 text-center"></i> 广告位设置
+                        </a>
+                        <a href="#textContent" class="nav-link">
+                            <i class="fa fa-font w-6 text-center"></i> 文本内容设置
+                        </a>
+                        <a href="#downloadLinks" class="nav-link">
+                            <i class="fa fa-download w-6 text-center"></i> 下载链接设置
+                        </a>
+                        <a href="#manualLinks" class="nav-link">
+                            <i class="fa fa-book w-6 text-center"></i> 使用手册链接设置
+                        </a>
+                        <a href="#qrCodes" class="nav-link">
+                            <i class="fa fa-qrcode w-6 text-center"></i> 移动端扫码设置
+                        </a>
+                        <a href="#openSource" class="nav-link">
+                            <i class="fa fa-th-list w-6 text-center"></i> OpenConnect客户端设置
+                        </a>
+                        <a href="#customClientsSettings" class="nav-link">
+                            <i class="fa fa-list-alt w-6 text-center"></i> 其他开源客户端设置
+                        </a>
+                    </nav>
+                </aside>
+
+                <!-- 右侧内容区域 -->
+                <div class="col-span-1 md:col-span-9 lg:col-span-10 space-y-8">
                     
-                    <div class="bg-neutral-50 p-4 rounded-xl">
-                        <h4 class="font-semibold text-lg mb-4">macOS</h4>
-                        <div class="space-y-4">
+                    <!-- 管理员信息设置 -->
+                    <div id="adminInfo" class="bg-white rounded-2xl shadow-lg p-6 border border-neutral-200 scroll-mt-24">
+                        <h3 class="text-xl font-bold mb-6 flex items-center">
+                            <i class="fa fa-user-circle mr-2 text-primary"></i> 管理员信息设置
+                        </h3>
+                        <form id="adminForm" class="space-y-6">
                             <div>
-                                <label for="macosIntelLink" class="block text-sm font-medium text-neutral-700 mb-1">Intel 芯片下载链接</label>
-                                <input type="url" id="macosIntelLink" name="macosIntelLink"
+                                <label for="adminUsername" class="block text-sm font-medium text-neutral-700 mb-1">用户名</label>
+                                <input type="text" id="adminUsername" name="adminUsername" required
                                     class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
                             </div>
-                            <div>
-                                <label for="macosArmLink" class="block text-sm font-medium text-neutral-700 mb-1">Apple Silicon 芯片下载链接</label>
-                                <input type="url" id="macosArmLink" name="macosArmLink"
-                                    class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="oldPassword" class="block text-sm font-medium text-neutral-700 mb-1">原密码</label>
+                                    <input type="password" id="oldPassword" name="oldPassword"
+                                        class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
+                                </div>
+                                <div>
+                                    <label for="newPassword" class="block text-sm font-medium text-neutral-700 mb-1">新密码（留空则不修改）</label>
+                                    <input type="password" id="newPassword" name="newPassword"
+                                        class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
+                                </div>
                             </div>
-                            <div>
-                                <label for="macosAppStoreLink" class="block text-sm font-medium text-neutral-700 mb-1">App Store 版本下载链接</label>
-                                <input type="url" id="macosAppStoreLink" name="macosAppStoreLink"
-                                    class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="bg-neutral-50 p-4 rounded-xl">
-                        <h4 class="font-semibold text-lg mb-4">Linux</h4>
-                        <div class="space-y-4">
-                            <div>
-                                <label for="linuxDebLink" class="block text-sm font-medium text-neutral-700 mb-1">Debian/Ubuntu (.deb) 下载链接</label>
-                                <input type="url" id="linuxDebLink" name="linuxDebLink"
-                                    class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
-                            </div>
-                            <div>
-                                <label for="linuxRpmLink" class="block text-sm font-medium text-neutral-700 mb-1">RedHat/CentOS (.rpm) 下载链接</label>
-                                <input type="url" id="linuxRpmLink" name="linuxRpmLink"
-                                    class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="bg-neutral-50 p-4 rounded-xl">
-                        <h4 class="font-semibold text-lg mb-4">iOS</h4>
-                        <div>
-                            <label for="iosLink" class="block text-sm font-medium text-neutral-700 mb-1">App Store 下载链接</label>
-                            <input type="url" id="iosLink" name="iosLink"
-                                class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
-                        </div>
-                    </div>
-                    
-                    <div class="bg-neutral-50 p-4 rounded-xl">
-                        <h4 class="font-semibold text-lg mb-4">Android</h4>
-                        <div class="space-y-4">
-                            <div>
-                                <label for="androidLatestLink" class="block text-sm font-medium text-neutral-700 mb-1">新版本下载链接</label>
-                                <input type="url" id="androidLatestLink" name="androidLatestLink"
-                                    class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
-                            </div>
-                            <div>
-                                <label for="androidOldLink" class="block text-sm font-medium text-neutral-700 mb-1">旧版本下载链接</label>
-                                <input type="url" id="androidOldLink" name="androidOldLink"
-                                    class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <button type="submit" class="btn-hover bg-primary text-white py-2 px-6 rounded-lg font-medium flex items-center">
-                        <i class="fa fa-link mr-2"></i> 更新下载链接
-                    </button>
-                    <p id="downloadsUpdateMessage" class="hidden mt-4 p-3 rounded-lg text-center"></p>
-                </form>
-            </div>
-            
-            <!-- 手册链接设置 -->
-            <div class="bg-white rounded-2xl shadow-lg p-6 mb-8 border border-neutral-200">
-                <h3 class="text-xl font-bold mb-6 flex items-center">
-                    <i class="fa fa-book mr-2"></i> 使用手册链接设置
-                </h3>
-                <form id="manualsForm" class="space-y-6">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label for="manualWindowsLinkInput" class="block text-sm font-medium text-neutral-700 mb-1">Windows 手册链接</label>
-                            <input type="url" id="manualWindowsLinkInput" name="manualWindowsLinkInput"
-                                class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
-                        </div>
-                        <div>
-                            <label for="manualMacOSLinkInput" class="block text-sm font-medium text-neutral-700 mb-1">macOS 手册链接</label>
-                            <input type="url" id="manualMacOSLinkInput" name="manualMacOSLinkInput"
-                                class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
-                        </div>
-                        <div>
-                            <label for="manualLinuxLinkInput" class="block text-sm font-medium text-neutral-700 mb-1">Linux 手册链接</label>
-                            <input type="url" id="manualLinuxLinkInput" name="manualLinuxLinkInput"
-                                class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
-                        </div>
-                        <div>
-                            <label for="manualIOSLinkInput" class="block text-sm font-medium text-neutral-700 mb-1">iOS 手册链接</label>
-                            <input type="url" id="manualIOSLinkInput" name="manualIOSLinkInput"
-                                class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
-                        </div>
-                        <div>
-                            <label for="manualAndroidLinkInput" class="block text-sm font-medium text-neutral-700 mb-1">Android 手册链接</label>
-                            <input type="url" id="manualAndroidLinkInput" name="manualAndroidLinkInput"
-                                class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
-                        </div>
-                    </div>
-                    <button type="submit" class="btn-hover bg-primary text-white py-2 px-6 rounded-lg font-medium flex items-center">
-                        <i class="fa fa-link mr-2"></i> 更新手册链接
-                    </button>
-                    <p id="manualsUpdateMessage" class="hidden mt-4 p-3 rounded-lg text-center"></p>
-                </form>
-            </div>
-            
-            <!-- 二维码设置 -->
-            <div class="bg-white rounded-2xl shadow-lg p-6 mb-8 border border-neutral-200">
-                <h3 class="text-xl font-bold mb-6 flex items-center">
-                    <i class="fa fa-qrcode mr-2"></i> 二维码设置
-                </h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div>
-                        <h4 class="font-medium mb-4">iOS 客户端二维码</h4>
-                        <img id="iosQrPreview" src="img/ios-qr.png" alt="iOS QR Code" class="w-48 h-48 object-cover mb-4 border border-neutral-200 rounded-lg">
-                        <input type="file" id="iosQrUpload" accept="image/*" class="mb-2">
-                        <p id="iosQrMessage" class="hidden p-2 rounded-lg text-center text-sm"></p>
-                    </div>
-                    <div>
-                        <h4 class="font-medium mb-4">Android 客户端二维码</h4>
-                        <img id="androidQrPreview" src="img/android-qr.png" alt="Android QR Code" class="w-48 h-48 object-cover mb-4 border border-neutral-200 rounded-lg">
-                        <input type="file" id="androidQrUpload" accept="image/*" class="mb-2">
-                        <p id="androidQrMessage" class="hidden p-2 rounded-lg text-center text-sm"></p>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- 其他客户端设置 -->
-            <div class="bg-white rounded-2xl shadow-lg p-6 mb-8 border border-neutral-200">
-                <div class="flex justify-between items-center mb-6">
-                    <h3 class="text-xl font-bold flex items-center">
-                        <i class="fa fa-th-list mr-2"></i> 开源客户端
-                    </h3>
-                    <button id="addClientBtn" class="bg-primary/10 hover:bg-primary/20 text-primary px-4 py-2 rounded-lg text-sm btn-hover flex items-center">
-                        <i class="fa fa-plus mr-2"></i> 添加客户端
-                    </button>
-                </div>
-                
-                <!-- 添加客户端表单 -->
-                <div id="addClientFormContainer" class="hidden bg-neutral-50 p-6 rounded-xl mb-6">
-                    <h4 class="font-medium text-lg mb-4">添加新客户端</h4>
-                    <form id="addClientForm" class="space-y-4">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label for="clientName" class="block text-sm font-medium text-neutral-700 mb-1">客户端名称 *</label>
-                                <input type="text" id="clientName" name="clientName" required
-                                    class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
-                            </div>
-                            <div>
-                                <label for="clientOs" class="block text-sm font-medium text-neutral-700 mb-1">适配系统 *</label>
-                                <input type="text" id="clientOs" name="clientOs" required
-                                    class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none" placeholder="例如: Windows, macOS">
-                            </div>
-                        </div>
-                        <div>
-                            <label for="clientUrl" class="block text-sm font-medium text-neutral-700 mb-1">下载链接 *</label>
-                            <input type="url" id="clientUrl" name="clientUrl" required
-                                class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
-                        </div>
-                        <div>
-                            <label for="clientManual" class="block text-sm font-medium text-neutral-700 mb-1">使用手册链接 *</label>
-                            <input type="url" id="clientManual" name="clientManual" required
-                                class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
-                        </div>
-                        <div class="flex justify-end gap-4">
-                            <button type="button" id="cancelAddClient" class="bg-neutral-200 hover:bg-neutral-300 text-neutral-800 px-4 py-2 rounded-lg text-sm btn-hover">
-                                取消
+                            <button type="submit" class="btn-hover bg-primary text-white py-2 px-6 rounded-lg font-medium flex items-center">
+                                <i class="fa fa-user-edit mr-2"></i> 更新管理员信息
                             </button>
-                            <button type="submit" class="bg-primary text-white px-4 py-2 rounded-lg text-sm btn-hover">
-                                添加
+                            <p id="adminUpdateMessage" class="hidden mt-4 p-3 rounded-lg text-center"></p>
+                        </form>
+                    </div>
+                    
+                    <!-- 顶部导航设置 (新模块) -->
+                    <div id="headerNavSettings" class="bg-white rounded-2xl shadow-lg p-6 border border-neutral-200 scroll-mt-24">
+                        <h3 class="text-xl font-bold mb-6 flex items-center">
+                            <i class="fa fa-compass mr-2 text-primary"></i> 顶部导航设置
+                        </h3>
+                        <form id="headerNavForm">
+                            <!-- 按钮 1 -->
+                            <div class="mb-6 pb-6 border-b border-gray-100 last:border-0">
+                                <div class="flex items-center justify-between mb-2">
+                                    <label class="text-sm font-medium text-neutral-700">按钮 1 (咨询)</label>
+                                    <label class="inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" id="headerBtn1Visible" class="sr-only peer">
+                                        <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+                                        <span class="ml-2 text-xs font-medium text-gray-900">显示</span>
+                                    </label>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <input type="text" id="headerBtn1Text" placeholder="按钮文本" class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none h-[42px]">
+                                    <div class="flex items-center gap-3 bg-neutral-50 p-1 pl-3 rounded-lg border border-neutral-200 h-[42px]">
+                                        <span class="text-sm text-neutral-500 whitespace-nowrap">咨询图标:</span>
+                                        <img id="consultingQrPreview" src="" class="w-6 h-6 object-cover rounded border border-neutral-300 bg-white">
+                                        <input type="file" id="consultingQrUpload" accept="image/*" class="text-sm w-full file:mr-4 file:py-1 file:px-2 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20">
+                                        <p id="consultingQrMessage" class="hidden text-xs"></p>
+                                        <input type="text" id="headerBtn1Url" class="hidden">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 按钮 2 -->
+                            <div class="mb-6 pb-6 border-b border-gray-100 last:border-0">
+                                <div class="flex items-center justify-between mb-2">
+                                    <label class="text-sm font-medium text-neutral-700">按钮 2</label>
+                                    <label class="inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" id="headerBtn2Visible" class="sr-only peer">
+                                        <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+                                        <span class="ml-2 text-xs font-medium text-gray-900">显示</span>
+                                    </label>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <input type="text" id="headerBtn2Text" placeholder="按钮文本" class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none h-[42px]">
+                                    <input type="text" id="headerBtn2Url" placeholder="按钮链接" class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none h-[42px]">
+                                </div>
+                            </div>
+
+                            <!-- 按钮 3 -->
+                            <div class="mb-6">
+                                <div class="flex items-center justify-between mb-2">
+                                    <label class="text-sm font-medium text-neutral-700">按钮 3</label>
+                                    <label class="inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" id="headerBtn3Visible" class="sr-only peer">
+                                        <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+                                        <span class="ml-2 text-xs font-medium text-gray-900">显示</span>
+                                    </label>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <input type="text" id="headerBtn3Text" placeholder="按钮文本" class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none h-[42px]">
+                                    <input type="text" id="headerBtn3Url" placeholder="按钮链接" class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none h-[42px]">
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn-hover bg-primary text-white py-2 px-6 rounded-lg font-medium flex items-center mt-6">
+                                <i class="fa fa-save mr-2"></i> 更新顶部导航
+                            </button>
+                            <p id="headerNavUpdateMessage" class="hidden mt-4 p-3 rounded-lg text-center"></p>
+                        </form>
+                    </div>
+
+                    <!-- 广告位设置 -->
+                    <div id="bannerSettings" class="bg-white rounded-2xl shadow-lg p-6 border border-neutral-200 scroll-mt-24">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-xl font-bold flex items-center">
+                                <i class="fa fa-bullhorn mr-2 text-primary"></i> 广告位设置
+                            </h3>
+                            <label class="inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="bannerVisible" class="sr-only peer">
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                <span class="ml-3 text-sm font-medium text-gray-900">开启广告位</span>
+                            </label>
+                        </div>
+                        <form id="bannerForm" class="space-y-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-neutral-700 mb-2">广告图标 (Logo)</label>
+                                    <div class="flex items-center gap-3 bg-neutral-50 p-2 rounded-lg border border-neutral-200">
+                                        <img id="bannerImagePreview" src="" class="w-12 h-8 object-contain rounded bg-white border border-neutral-200">
+                                        <input type="file" id="bannerImageUpload" accept="image/*" class="text-sm w-full file:mr-4 file:py-1 file:px-2 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20">
+                                        <input type="hidden" id="bannerImagePath">
+                                    </div>
+                                    <p id="bannerImageMessage" class="hidden text-xs mt-1 text-center"></p>
+                                </div>
+                                <div>
+                                    <label for="bannerLink" class="block text-sm font-medium text-neutral-700 mb-2">跳转链接</label>
+                                    <input type="url" id="bannerLink" placeholder="https://..." class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
+                                </div>
+                            </div>
+                            
+                            <div class="bg-neutral-50 p-4 rounded-xl border border-neutral-100">
+                                <h4 class="text-sm font-bold text-neutral-700 mb-3">广告文本内容 (支持分段样式)</h4>
+                                <div class="space-y-4">
+                                    <div>
+                                        <label class="block text-xs font-medium text-neutral-500 mb-1">第1段 (常规文本)</label>
+                                        <input type="text" id="bannerText1" class="w-full px-3 py-2 rounded border border-neutral-300 input-focus outline-none text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-medium text-red-500 mb-1">第2段 (红色加粗)</label>
+                                        <input type="text" id="bannerText2" class="w-full px-3 py-2 rounded border border-red-200 bg-red-50 input-focus outline-none text-sm font-bold text-red-600">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-medium text-green-600 mb-1">第3段 (绿色加粗)</label>
+                                        <input type="text" id="bannerText3" class="w-full px-3 py-2 rounded border border-green-200 bg-green-50 input-focus outline-none text-sm font-bold text-green-600">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-medium text-neutral-500 mb-1">第4段 (常规文本)</label>
+                                        <input type="text" id="bannerText4" class="w-full px-3 py-2 rounded border border-neutral-300 input-focus outline-none text-sm">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn-hover bg-primary text-white py-2 px-6 rounded-lg font-medium flex items-center">
+                                <i class="fa fa-save mr-2"></i> 保存广告位设置
+                            </button>
+                            <p id="bannerUpdateMessage" class="hidden mt-4 p-3 rounded-lg text-center"></p>
+                        </form>
+                    </div>
+
+                    <!-- 文本内容设置 -->
+                    <div id="textContent" class="bg-white rounded-2xl shadow-lg p-6 border border-neutral-200 scroll-mt-24">
+                        <h3 class="text-xl font-bold mb-6 flex items-center">
+                            <i class="fa fa-font mr-2 text-primary"></i> 文本内容设置
+                        </h3>
+                        <form id="textsForm" class="space-y-6">
+                            <!-- Hero Settings -->
+                            <div class="border-b border-neutral-200 pb-6 mb-6">
+                                <h4 class="font-bold text-lg mb-4 text-neutral-700">主视觉区域</h4>
+                                <div class="mb-4">
+                                    <label class="block text-sm font-medium text-neutral-700 mb-1">主标题</label>
+                                    <input type="text" id="titleText" class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-neutral-700 mb-1">VPN 版本</label>
+                                        <input type="text" id="vpnVersionInput" class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-neutral-700 mb-1">UI 版本</label>
+                                        <input type="text" id="uiVersionInput" class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-neutral-700 mb-1">更新日期</label>
+                                        <input type="text" id="updateDateInput" class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="block text-sm font-medium text-neutral-700 mb-1">主下载按钮文本</label>
+                                    <input type="text" id="heroBtnTextInput" class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
+                                </div>
+                            </div>
+
+                            <!-- Section & Footer Settings -->
+                            <div class="border-b border-neutral-200 pb-6 mb-6">
+                                <h4 class="font-bold text-lg mb-4 text-neutral-700">区域标题 & 页脚</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-neutral-700 mb-1">下载区域标题</label>
+                                        <input type="text" id="downloadSectionTitleText" class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-neutral-700 mb-1">下载区域副标题</label>
+                                        <input type="text" id="downloadSectionSubtitleInput" class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-neutral-700 mb-1">页脚版权信息</label>
+                                    <input type="text" id="footerCopyrightInput" class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
+                                </div>
+                            </div>
+
+                            <!-- Button Labels -->
+                            <div>
+                                <h4 class="font-bold text-lg mb-4 text-neutral-700">通用按钮文本</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-neutral-700 mb-1">通用下载按钮</label>
+                                        <input type="text" id="commonDownloadTextInput" class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-neutral-700 mb-1">通用手册按钮</label>
+                                        <input type="text" id="commonManualTextInput" class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-neutral-700 mb-1">iOS 按钮</label>
+                                        <input type="text" id="iosButtonText" class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-neutral-700 mb-1">Android 按钮</label>
+                                        <input type="text" id="androidButtonText" class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn-hover bg-primary text-white py-2 px-6 rounded-lg font-medium flex items-center mt-6">
+                                <i class="fa fa-save mr-2"></i> 更新文本内容
+                            </button>
+                            <p id="textsUpdateMessage" class="hidden mt-4 p-3 rounded-lg text-center"></p>
+                        </form>
+                    </div>
+                
+                    <!-- 下载链接设置 -->
+                    <div id="downloadLinks" class="bg-white rounded-2xl shadow-lg p-6 border border-neutral-200 scroll-mt-24">
+                        <h3 class="text-xl font-bold mb-6 flex items-center">
+                            <i class="fa fa-download mr-2 text-primary"></i> 下载链接设置
+                        </h3>
+                        <form id="downloadsForm" class="space-y-6">
+                            <div class="bg-neutral-50 p-4 rounded-xl">
+                                <h4 class="font-semibold text-lg mb-4">Windows</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-neutral-700 mb-1">AMD64 最新版</label>
+                                        <input type="url" id="winAmdLatest" class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-neutral-700 mb-1">AMD64 稳定版</label>
+                                        <input type="url" id="winAmdStable" class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-neutral-700 mb-1">ARM64 最新版</label>
+                                        <input type="url" id="winArmLatest" class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-neutral-700 mb-1">ARM64 稳定版</label>
+                                        <input type="url" id="winArmStable" class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-neutral-700 mb-1">Win7/8 AMD64 老版本</label>
+                                        <input type="url" id="win7Amd" class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-neutral-700 mb-1">Win7/8 ARM64 老版本</label>
+                                        <input type="url" id="win7Arm" class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-neutral-50 p-4 rounded-xl">
+                                <h4 class="font-semibold text-lg mb-4">macOS</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-neutral-700 mb-1">Intel 芯片版</label>
+                                        <input type="url" id="macIntel" class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-neutral-700 mb-1">Apple Silicon (M1/M2...)</label>
+                                        <input type="url" id="macSilicon" class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-neutral-700 mb-1">OSX (Maverick/Yosemite) 老版本</label>
+                                        <input type="url" id="macOldOsx" class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-neutral-700 mb-1">App Store 版本</label>
+                                        <input type="url" id="macAppStore" class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-neutral-50 p-4 rounded-xl">
+                                <h4 class="font-semibold text-lg mb-4">Linux</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-neutral-700 mb-1">AMD64 (Debian/Ubuntu | deb)</label>
+                                        <input type="url" id="linuxAmdDeb" class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-neutral-700 mb-1">AMD64 (RedHat/CentOS | rpm)</label>
+                                        <input type="url" id="linuxAmdRpm" class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-neutral-700 mb-1">ARM64 (Debian/Ubuntu | deb)</label>
+                                        <input type="url" id="linuxArmDeb" class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-neutral-700 mb-1">ARM64 (RedHat/CentOS | rpm)</label>
+                                        <input type="url" id="linuxArmRpm" class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-neutral-700 mb-1">AMD64 Other (非deb/rpm)</label>
+                                        <input type="url" id="linuxAmdOther" class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-neutral-700 mb-1">ARM64 Other (非deb/rpm)</label>
+                                        <input type="url" id="linuxArmOther" class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-neutral-50 p-4 rounded-xl">
+                                <h4 class="font-semibold text-lg mb-4">iOS</h4>
+                                <div>
+                                    <label for="iosDownloadUrl" class="block text-sm font-medium text-neutral-700 mb-1">App Store 下载链接</label>
+                                    <input type="url" id="iosDownloadUrl" name="iosDownloadUrl" placeholder="https://apps.apple.com/cn/app/cisco-secure-client/id1135064690"
+                                        class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
+                                </div>
+                            </div>
+                            
+                            <div class="bg-neutral-50 p-4 rounded-xl">
+                                <h4 class="font-semibold text-lg mb-4">HarmonyOS</h4>
+                                <div>
+                                    <label for="harmonyLink" class="block text-sm font-medium text-neutral-700 mb-1">应用商店下载链接</label>
+                                    <input type="url" id="harmonyLink" name="harmonyLink"
+                                        class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
+                                </div>
+                            </div>
+                            
+                            <div class="bg-neutral-50 p-4 rounded-xl">
+                                <h4 class="font-semibold text-lg mb-4">Android</h4>
+                                <div class="space-y-4">
+                                    <div>
+                                        <label for="androidLatestLink" class="block text-sm font-medium text-neutral-700 mb-1">新版本下载链接</label>
+                                        <input type="url" id="androidLatestLink" name="androidLatestLink"
+                                            class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
+                                    </div>
+                                    <div>
+                                        <label for="androidOldLink" class="block text-sm font-medium text-neutral-700 mb-1">旧版本下载链接</label>
+                                        <input type="url" id="androidOldLink" name="androidOldLink"
+                                            class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="btn-hover bg-primary text-white py-2 px-6 rounded-lg font-medium flex items-center">
+                                <i class="fa fa-link mr-2"></i> 更新下载链接
+                            </button>
+                            <p id="downloadsUpdateMessage" class="hidden mt-4 p-3 rounded-lg text-center"></p>
+                        </form>
+                    </div>
+                    
+                    <!-- 手册链接设置 -->
+                    <div id="manualLinks" class="bg-white rounded-2xl shadow-lg p-6 border border-neutral-200 scroll-mt-24">
+                        <h3 class="text-xl font-bold mb-6 flex items-center">
+                            <i class="fa fa-book mr-2 text-primary"></i> 使用手册链接设置
+                        </h3>
+                        <form id="manualsForm" class="space-y-6">
+                            <div>
+                                <label for="manualWindowsLinkInput" class="block text-sm font-medium text-neutral-700 mb-1">Windows 手册链接</label>
+                                <input type="url" id="manualWindowsLinkInput" name="manualWindowsLinkInput"
+                                    class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
+                            </div>
+                                
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <!-- macOS Manuals -->
+                                <div class="bg-neutral-50 p-4 rounded-lg">
+                                    <label class="block text-sm font-bold text-neutral-700 mb-2">macOS 手册</label>
+                                    <div class="space-y-3">
+                                        <div>
+                                            <label for="manualMacAppStoreInput" class="block text-xs text-neutral-500 mb-1">App Store 版手册</label>
+                                            <input type="url" id="manualMacAppStoreInput" class="w-full px-3 py-2 rounded border border-neutral-300 input-focus outline-none text-sm">
+                                        </div>
+                                        <div>
+                                            <label for="manualMacDmgInput" class="block text-xs text-neutral-500 mb-1">DMG 桌面版手册</label>
+                                            <input type="url" id="manualMacDmgInput" class="w-full px-3 py-2 rounded border border-neutral-300 input-focus outline-none text-sm">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Linux Manuals -->
+                                <div class="bg-neutral-50 p-4 rounded-lg">
+                                    <label class="block text-sm font-bold text-neutral-700 mb-2">Linux 手册</label>
+                                    <div class="space-y-3">
+                                        <div>
+                                            <label for="manualLinuxServerInput" class="block text-xs text-neutral-500 mb-1">Server 版配置</label>
+                                            <input type="url" id="manualLinuxServerInput" class="w-full px-3 py-2 rounded border border-neutral-300 input-focus outline-none text-sm">
+                                        </div>
+                                        <div>
+                                            <label for="manualLinuxDesktopInput" class="block text-xs text-neutral-500 mb-1">Desktop 版配置</label>
+                                            <input type="url" id="manualLinuxDesktopInput" class="w-full px-3 py-2 rounded border border-neutral-300 input-focus outline-none text-sm">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label for="manualIOSLinkInput" class="block text-sm font-medium text-neutral-700 mb-1">iOS 手册链接</label>
+                                    <input type="url" id="manualIOSLinkInput" name="manualIOSLinkInput"
+                                        class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
+                                </div>
+
+                                <div>
+                                    <label for="manualHarmonyLinkInput" class="block text-sm font-medium text-neutral-700 mb-1">HarmonyOS 手册链接</label>
+                                    <input type="url" id="manualHarmonyLinkInput" name="manualHarmonyLinkInput"
+                                        class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
+                                </div>
+
+                                <div class="bg-neutral-50 p-4 rounded-lg">
+                                    <label class="block text-sm font-bold text-neutral-700 mb-2">Android 手册</label>
+                                    <div class="space-y-3">
+                                        <div>
+                                            <label for="manualAndroidLatestInput" class="block text-xs text-neutral-500 mb-1">新版本使用指南</label>
+                                            <input type="url" id="manualAndroidLatestInput" class="w-full px-3 py-2 rounded border border-neutral-300 input-focus outline-none text-sm">
+                                        </div>
+                                        <div>
+                                            <label for="manualAndroidOldInput" class="block text-xs text-neutral-500 mb-1">旧版本使用指南</label>
+                                            <input type="url" id="manualAndroidOldInput" class="w-full px-3 py-2 rounded border border-neutral-300 input-focus outline-none text-sm">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn-hover bg-primary text-white py-2 px-6 rounded-lg font-medium flex items-center">
+                                <i class="fa fa-link mr-2"></i> 更新手册链接
+                            </button>
+                            <p id="manualsUpdateMessage" class="hidden mt-4 p-3 rounded-lg text-center"></p>
+                        </form>
+                    </div>
+                    
+                    <!-- 二维码设置 -->
+                    <div id="qrCodes" class="bg-white rounded-2xl shadow-lg p-6 border border-neutral-200 scroll-mt-24">
+                        <h3 class="text-xl font-bold mb-6 flex items-center">
+                            <i class="fa fa-qrcode mr-2 text-primary"></i> 移动端扫码设置
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div>
+                                <h4 class="font-medium mb-4">iOS 客户端二维码</h4>
+                                <img id="iosQrPreview" src="img/ios-qr.png" alt="iOS QR Code" class="w-48 h-48 object-cover mb-4 border border-neutral-200 rounded-lg">
+                                <input type="file" id="iosQrUpload" accept="image/*" class="mb-2">
+                                <p id="iosQrMessage" class="hidden p-2 rounded-lg text-center text-sm"></p>
+                            </div>
+                            <div>
+                                <h4 class="font-medium mb-4">Android 客户端二维码</h4>
+                                <img id="androidQrPreview" src="img/android-qr.png" alt="Android QR Code" class="w-48 h-48 object-cover mb-4 border border-neutral-200 rounded-lg">
+                                <input type="file" id="androidQrUpload" accept="image/*" class="mb-2">
+                                <p id="androidQrMessage" class="hidden p-2 rounded-lg text-center text-sm"></p>
+                            </div>
+                            <div>
+                                <h4 class="font-medium mb-4">HarmonyOS 客户端二维码</h4>
+                                <img id="harmonyQrPreview" src="img/harmony-qr.png" alt="HarmonyOS QR Code" class="w-48 h-48 object-cover mb-4 border border-neutral-200 rounded-lg">
+                                <input type="file" id="harmonyQrUpload" accept="image/*" class="mb-2">
+                                <p id="harmonyQrMessage" class="hidden p-2 rounded-lg text-center text-sm"></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 其他开源客户端设置 -->
+                    <div id="openSource" class="bg-white rounded-2xl shadow-lg p-6 border border-neutral-200 scroll-mt-24">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-xl font-bold flex items-center">
+                                <i class="fa fa-th-list mr-2 text-primary"></i> OpenConnect客户端设置
+                            </h3>
+                            <button id="addClientBtn" class="bg-primary/10 hover:bg-primary/20 text-primary px-4 py-2 rounded-lg text-sm btn-hover flex items-center">
+                                <i class="fa fa-plus mr-2"></i> 添加客户端
                             </button>
                         </div>
-                        <p id="addClientMessage" class="hidden p-2 rounded-lg text-center text-sm"></p>
-                    </form>
-                </div>
-                
-                <!-- 客户端列表 -->
-                <div id="otherClientsContainer" class="space-y-4">
-                    <!-- 内容将通过JavaScript动态生成 -->
+                        
+                        <!-- 添加客户端表单 -->
+                        <div id="addClientFormContainer" class="hidden bg-neutral-50 p-6 rounded-xl mb-6">
+                            <h4 class="font-medium text-lg mb-4" id="addClientFormTitle">添加新客户端</h4>
+                            <form id="addClientForm" class="space-y-4">
+                                <input type="hidden" id="clientIndex" value="-1">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="clientName" class="block text-sm font-medium text-neutral-700 mb-1">客户端名称 *</label>
+                                        <input type="text" id="clientName" name="clientName" required
+                                            class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
+                                    </div>
+                                    <div>
+                                        <label for="clientOs" class="block text-sm font-medium text-neutral-700 mb-1">适配系统 *</label>
+                                        <input type="text" id="clientOs" name="clientOs" required
+                                            class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none" placeholder="例如: Windows, macOS">
+                                    </div>
+                                </div>
+                                
+                                <!-- Icon Selection -->
+                                <div>
+                                    <label class="block text-sm font-medium text-neutral-700 mb-2">客户端图标</label>
+                                    <div class="flex flex-wrap gap-3">
+                                        <!-- Windows -->
+                                        <label class="cursor-pointer" title="Windows">
+                                            <input type="radio" name="clientIcon" value="fa-windows" class="peer sr-only" checked>
+                                            <div class="w-10 h-10 rounded-lg border border-gray-200 flex items-center justify-center text-gray-400 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-blue-600 hover:bg-gray-50 transition-all">
+                                                <i class="fa fa-windows text-xl"></i>
+                                            </div>
+                                        </label>
+                                        <!-- macOS -->
+                                        <label class="cursor-pointer" title="macOS">
+                                            <input type="radio" name="clientIcon" value="fa-apple" class="peer sr-only">
+                                            <div class="w-10 h-10 rounded-lg border border-gray-200 flex items-center justify-center text-gray-400 peer-checked:bg-gray-800 peer-checked:text-white peer-checked:border-gray-800 hover:bg-gray-50 transition-all">
+                                                <i class="fa fa-apple text-xl"></i>
+                                            </div>
+                                        </label>
+                                        <!-- Linux -->
+                                        <label class="cursor-pointer" title="Linux">
+                                            <input type="radio" name="clientIcon" value="fa-linux" class="peer sr-only">
+                                            <div class="w-10 h-10 rounded-lg border border-gray-200 flex items-center justify-center text-gray-400 peer-checked:bg-orange-600 peer-checked:text-white peer-checked:border-orange-600 hover:bg-gray-50 transition-all">
+                                                <i class="fa fa-linux text-xl"></i>
+                                            </div>
+                                        </label>
+                                        <!-- Android -->
+                                        <label class="cursor-pointer" title="Android">
+                                            <input type="radio" name="clientIcon" value="fa-android" class="peer sr-only">
+                                            <div class="w-10 h-10 rounded-lg border border-gray-200 flex items-center justify-center text-gray-400 peer-checked:bg-green-600 peer-checked:text-white peer-checked:border-green-600 hover:bg-gray-50 transition-all">
+                                                <i class="fa fa-android text-xl"></i>
+                                            </div>
+                                        </label>
+                                        <!-- Mobile -->
+                                        <label class="cursor-pointer" title="Mobile/iOS">
+                                            <input type="radio" name="clientIcon" value="fa-mobile" class="peer sr-only">
+                                            <div class="w-10 h-10 rounded-lg border border-gray-200 flex items-center justify-center text-gray-400 peer-checked:bg-indigo-600 peer-checked:text-white peer-checked:border-indigo-600 hover:bg-gray-50 transition-all">
+                                                <i class="fa fa-mobile text-xl"></i>
+                                            </div>
+                                        </label>
+                                        <!-- Globe -->
+                                        <label class="cursor-pointer" title="Web/General">
+                                            <input type="radio" name="clientIcon" value="fa-globe" class="peer sr-only">
+                                            <div class="w-10 h-10 rounded-lg border border-gray-200 flex items-center justify-center text-gray-400 peer-checked:bg-blue-400 peer-checked:text-white peer-checked:border-blue-400 hover:bg-gray-50 transition-all">
+                                                <i class="fa fa-globe text-xl"></i>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <!-- QR Code Upload -->
+                                <div>
+                                    <label class="block text-sm font-medium text-neutral-700 mb-1">自定义二维码（可选）</label>
+                                    <div class="flex items-center gap-3 bg-white p-2 rounded-lg border border-neutral-300">
+                                        <img id="clientQrPreview" src="" class="w-10 h-10 object-cover rounded border border-neutral-200 bg-gray-50 hidden">
+                                        <input type="file" id="clientQrUpload" accept="image/*" class="text-sm w-full file:mr-4 file:py-1 file:px-2 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20">
+                                        <input type="hidden" id="clientQrPath">
+                                    </div>
+                                    <p class="text-xs text-neutral-500 mt-1">仅在需要显示扫码按钮时上传，如 Android/iOS 客户端</p>
+                                </div>
+
+                                <div>
+                                    <label for="clientUrl" class="block text-sm font-medium text-neutral-700 mb-1">下载链接 *</label>
+                                    <input type="url" id="clientUrl" name="clientUrl" required
+                                        class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
+                                </div>
+                                <div>
+                                    <label for="clientManual" class="block text-sm font-medium text-neutral-700 mb-1">使用手册链接 *</label>
+                                    <input type="url" id="clientManual" name="clientManual" required
+                                        class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
+                                </div>
+                                <div class="flex justify-end gap-4">
+                                    <button type="button" id="cancelAddClient" class="bg-neutral-200 hover:bg-neutral-300 text-neutral-800 px-4 py-2 rounded-lg text-sm btn-hover">
+                                        取消
+                                    </button>
+                                    <button type="submit" class="bg-primary text-white px-4 py-2 rounded-lg text-sm btn-hover">
+                                        添加
+                                    </button>
+                                </div>
+                                <p id="addClientMessage" class="hidden p-2 rounded-lg text-center text-sm"></p>
+                            </form>
+                        </div>
+                        
+                        <!-- 客户端列表 -->
+                        <div id="otherClientsContainer" class="space-y-4">
+                            <!-- 内容将通过JavaScript动态生成 -->
+                        </div>
+                    </div>
+
+                    <!-- 其他开源客户端设置 (新) -->
+                    <div id="customClientsSettings" class="bg-white rounded-2xl shadow-lg p-6 border border-neutral-200 scroll-mt-24">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-xl font-bold flex items-center">
+                                <i class="fa fa-list-alt mr-2 text-primary"></i> 其他开源客户端设置
+                            </h3>
+                            <button id="addCustomClientBtn" class="bg-primary/10 hover:bg-primary/20 text-primary px-4 py-2 rounded-lg text-sm btn-hover flex items-center">
+                                <i class="fa fa-plus mr-2"></i> 添加客户端
+                            </button>
+                        </div>
+                        
+                        <!-- 添加客户端表单 (Custom) -->
+                        <div id="addCustomClientFormContainer" class="hidden bg-neutral-50 p-6 rounded-xl mb-6">
+                            <h4 class="font-medium text-lg mb-4" id="addCustomClientFormTitle">添加新客户端</h4>
+                            <form id="addCustomClientForm" class="space-y-4">
+                                <input type="hidden" id="customClientIndex" value="-1">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="customClientName" class="block text-sm font-medium text-neutral-700 mb-1">客户端名称 *</label>
+                                        <input type="text" id="customClientName" name="customClientName" required
+                                            class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
+                                    </div>
+                                    <div>
+                                        <label for="customClientOs" class="block text-sm font-medium text-neutral-700 mb-1">适配系统 *</label>
+                                        <input type="text" id="customClientOs" name="customClientOs" required
+                                            class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none" placeholder="例如: Windows, macOS">
+                                    </div>
+                                </div>
+                                
+                                <!-- Icon Selection -->
+                                <div>
+                                    <label class="block text-sm font-medium text-neutral-700 mb-2">客户端图标</label>
+                                    <div class="flex flex-wrap gap-3">
+                                        <!-- Windows -->
+                                        <label class="cursor-pointer" title="Windows">
+                                            <input type="radio" name="customClientIcon" value="fa-windows" class="peer sr-only" checked>
+                                            <div class="w-10 h-10 rounded-lg border border-gray-200 flex items-center justify-center text-gray-400 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-blue-600 hover:bg-gray-50 transition-all">
+                                                <i class="fa fa-windows text-xl"></i>
+                                            </div>
+                                        </label>
+                                        <!-- macOS -->
+                                        <label class="cursor-pointer" title="macOS">
+                                            <input type="radio" name="customClientIcon" value="fa-apple" class="peer sr-only">
+                                            <div class="w-10 h-10 rounded-lg border border-gray-200 flex items-center justify-center text-gray-400 peer-checked:bg-gray-800 peer-checked:text-white peer-checked:border-gray-800 hover:bg-gray-50 transition-all">
+                                                <i class="fa fa-apple text-xl"></i>
+                                            </div>
+                                        </label>
+                                        <!-- Linux -->
+                                        <label class="cursor-pointer" title="Linux">
+                                            <input type="radio" name="customClientIcon" value="fa-linux" class="peer sr-only">
+                                            <div class="w-10 h-10 rounded-lg border border-gray-200 flex items-center justify-center text-gray-400 peer-checked:bg-orange-600 peer-checked:text-white peer-checked:border-orange-600 hover:bg-gray-50 transition-all">
+                                                <i class="fa fa-linux text-xl"></i>
+                                            </div>
+                                        </label>
+                                        <!-- Android -->
+                                        <label class="cursor-pointer" title="Android">
+                                            <input type="radio" name="customClientIcon" value="fa-android" class="peer sr-only">
+                                            <div class="w-10 h-10 rounded-lg border border-gray-200 flex items-center justify-center text-gray-400 peer-checked:bg-green-600 peer-checked:text-white peer-checked:border-green-600 hover:bg-gray-50 transition-all">
+                                                <i class="fa fa-android text-xl"></i>
+                                            </div>
+                                        </label>
+                                        <!-- Mobile -->
+                                        <label class="cursor-pointer" title="Mobile/iOS">
+                                            <input type="radio" name="customClientIcon" value="fa-mobile" class="peer sr-only">
+                                            <div class="w-10 h-10 rounded-lg border border-gray-200 flex items-center justify-center text-gray-400 peer-checked:bg-indigo-600 peer-checked:text-white peer-checked:border-indigo-600 hover:bg-gray-50 transition-all">
+                                                <i class="fa fa-mobile text-xl"></i>
+                                            </div>
+                                        </label>
+                                        <!-- Globe -->
+                                        <label class="cursor-pointer" title="Web/General">
+                                            <input type="radio" name="customClientIcon" value="fa-globe" class="peer sr-only">
+                                            <div class="w-10 h-10 rounded-lg border border-gray-200 flex items-center justify-center text-gray-400 peer-checked:bg-blue-400 peer-checked:text-white peer-checked:border-blue-400 hover:bg-gray-50 transition-all">
+                                                <i class="fa fa-globe text-xl"></i>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <!-- QR Code Upload -->
+                                <div>
+                                    <label class="block text-sm font-medium text-neutral-700 mb-1">自定义二维码（可选）</label>
+                                    <div class="flex items-center gap-3 bg-white p-2 rounded-lg border border-neutral-300">
+                                        <img id="customClientQrPreview" src="" class="w-10 h-10 object-cover rounded border border-neutral-200 bg-gray-50 hidden">
+                                        <input type="file" id="customClientQrUpload" accept="image/*" class="text-sm w-full file:mr-4 file:py-1 file:px-2 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20">
+                                        <input type="hidden" id="customClientQrPath">
+                                    </div>
+                                    <p class="text-xs text-neutral-500 mt-1">仅在需要显示扫码按钮时上传，如 Android/iOS 客户端</p>
+                                </div>
+
+                                <div>
+                                    <label for="customClientUrl" class="block text-sm font-medium text-neutral-700 mb-1">下载链接 *</label>
+                                    <input type="url" id="customClientUrl" name="customClientUrl" required
+                                        class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
+                                </div>
+                                <div>
+                                    <label for="customClientManual" class="block text-sm font-medium text-neutral-700 mb-1">使用手册链接 *</label>
+                                    <input type="url" id="customClientManual" name="customClientManual" required
+                                        class="w-full px-4 py-2 rounded-lg border border-neutral-300 input-focus outline-none">
+                                </div>
+                                <div class="flex justify-end gap-4">
+                                    <button type="button" id="cancelAddCustomClient" class="bg-neutral-200 hover:bg-neutral-300 text-neutral-800 px-4 py-2 rounded-lg text-sm btn-hover">
+                                        取消
+                                    </button>
+                                    <button type="submit" class="bg-primary text-white px-4 py-2 rounded-lg text-sm btn-hover">
+                                        添加
+                                    </button>
+                                </div>
+                                <p id="addCustomClientMessage" class="hidden p-2 rounded-lg text-center text-sm"></p>
+                            </form>
+                        </div>
+                        
+                        <!-- 客户端列表 (Custom) -->
+                        <div id="customClientsContainer" class="space-y-4">
+                            <!-- 内容将通过JavaScript动态生成 -->
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
@@ -424,4 +865,3 @@
     <script src="js/admin.js"></script>
 </body>
 </html>
-    

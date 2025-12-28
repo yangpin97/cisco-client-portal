@@ -60,6 +60,21 @@
             .close-btn {
                 @apply absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-red-100 text-red-600 hover:bg-red-200 transition-colors z-10 cursor-pointer;
             }
+            /* Banner Marquee Animation */
+            .marquee-wrapper {
+                mask-image: linear-gradient(to right, transparent, black 20px, black 95%, transparent);
+            }
+            .marquee-content {
+                display: inline-block;
+                animation: marquee 30s linear infinite;
+            }
+            .marquee-content:hover {
+                animation-play-state: paused;
+            }
+            @keyframes marquee {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(-50%); }
+            }
         }
     </style>
 </head>
@@ -71,138 +86,188 @@
     <header class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-20 transition-all duration-300">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
             <div class="flex items-center space-x-2">
-                <i class="fa fa-shield text-primary text-xl"></i>
                 <h1 id="headerTitle" class="text-xl sm:text-2xl font-bold">Cisco Secure Client</h1>
             </div>
-            <!-- 管理按钮已隐藏 -->
+            <!-- Top Right Buttons -->
+            <div class="hidden md:flex items-center space-x-3">
+                <button type="button" id="headerBtn1" class="px-4 py-1.5 rounded-full bg-gray-100 text-sm font-medium hover:bg-gray-200 transition-colors text-neutral-600"></button>
+                <a id="headerBtn2" href="#" target="_blank" class="px-4 py-1.5 rounded-full bg-gray-100 text-sm font-medium hover:bg-gray-200 transition-colors text-neutral-600"></a>
+                <a id="headerBtn3" href="#" target="_blank" class="px-4 py-1.5 rounded-full bg-gray-100 text-sm font-medium hover:bg-gray-200 transition-colors text-neutral-600"></a>
+            </div>
         </div>
     </header>
+
+    <!-- 滚动广告位 -->
+    <div id="bannerSection" class="hidden w-full bg-white border-b border-gray-100 h-12 relative overflow-hidden z-10">
+        <a id="bannerLink" href="#" target="_blank" class="block w-full h-full flex items-center text-sm no-underline hover:text-primary transition-colors">
+            <!-- Fixed Icon Container -->
+            <div class="flex-shrink-0 px-4 bg-white z-20 h-full flex items-center border-r border-gray-50">
+                <img id="bannerIcon" src="" class="h-6 w-auto object-contain hidden">
+            </div>
+            
+            <!-- Scrolling Text Area -->
+            <div class="marquee-wrapper flex-1 relative h-full flex items-center overflow-hidden whitespace-nowrap">
+                <div id="bannerTextContainer" class="marquee-content">
+                    <!-- JS will inject duplicated content here -->
+                </div>
+            </div>
+        </a>
+    </div>
 
     <!-- 主内容 -->
     <main class="container mx-auto px-4 py-8 md:py-16 relative z-10">
         <!-- 标题区域 -->
         <div class="text-center max-w-3xl mx-auto mb-12 md:mb-20">
-            <h2 id="mainTitle" class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">Cisco Secure Client</h2>
-            <p id="mainSubtitle" class="text-base sm:text-lg text-neutral-600">
+            <h2 id="mainTitle" class="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 text-neutral-900">Cisco <span class="text-primary">Secure Client</span></h2>
+            
+            <!-- Badges -->
+            <div class="flex justify-center items-center gap-4 mb-4 flex-wrap">
+                <span class="px-3 py-1 rounded-full bg-green-50 text-green-700 text-xs font-medium flex items-center border border-green-100">
+                    <span class="w-1.5 h-1.5 rounded-full bg-green-500 mr-2"></span> VPN: <span id="vpnVersionVal" class="ml-1"></span>
+                </span>
+                <span class="px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-medium flex items-center border border-blue-100">
+                    <span class="w-1.5 h-1.5 rounded-full bg-blue-500 mr-2"></span> UI: <span id="uiVersionVal" class="ml-1"></span>
+                </span>
+            </div>
+
+            <p class="text-xs text-neutral-400 mb-8">最后更新: <span id="updateDateVal"></span></p>
+
+            <!-- Main Button -->
+            <button id="heroDownloadBtn" onclick="document.getElementById('downloadSection').scrollIntoView({behavior: 'smooth'})" class="bg-primary text-white px-8 py-3 rounded-lg font-medium hover:bg-secondary transition-all flex items-center justify-center mx-auto mb-12 shadow-lg hover:shadow-xl hover:-translate-y-0.5">
+                <span id="heroBtnText">立即下载</span>
+                <i class="fa fa-arrow-down ml-2"></i>
+            </button>
+            
+            <p id="mainSubtitle" class="hidden">
                 安全连接，无处不在。下载适用于您设备的Cisco Secure Client客户端，轻松建立安全连接。
             </p>
         </div>
 
         <!-- 下载区域 -->
-        <section class="max-w-5xl mx-auto mb-16">
-            <h3 id="downloadSectionTitle" class="text-xl sm:text-2xl font-bold mb-8 text-center">选择您的平台下载</h3>
+        <section id="downloadSection" class="max-w-7xl mx-auto mb-16">
+            <h3 id="downloadSectionTitle" class="text-2xl sm:text-3xl font-bold mb-2 text-center">选择您的平台</h3>
+            <p id="downloadSectionSubtitle" class="text-center text-neutral-500 mb-12 text-sm">支持全平台设备的无缝接入体验</p>
 
-            <!-- 桌面平台 -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            <!-- 统一平台 Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Windows -->
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
-                    <div class="h-3 bg-blue-500"></div>
-                    <div class="p-6">
-                        <div class="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                            <i class="fa fa-windows text-2xl text-blue-600"></i>
-                        </div>
-                        <h4 class="text-xl font-semibold mb-2">Windows</h4>
-                        <p class="text-neutral-600 mb-4">适用于Windows 7 及以上版本系统</p>
-                        <!-- 用户手册链接 -->
-                        <a href="#" class="inline-flex items-center text-primary hover:text-primary/80 text-sm mb-4 manual-link" data-platform="windows">
-                            <i class="fa fa-book mr-1"></i>
-                            <span>查看使用手册</span>
-                        </a>
-                        <button class="download-btn w-full bg-primary text-white py-3 px-4 rounded-lg font-medium btn-hover flex items-center justify-center" data-platform="windows">
-                            <i class="fa fa-download mr-2"></i> 下载客户端
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover group p-6 text-center">
+                    <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                        <i class="fa fa-windows text-4xl text-blue-600"></i>
+                    </div>
+                    <h4 class="text-lg font-bold mb-1">Windows</h4>
+                    <p class="text-xs text-neutral-400 mb-6">Win XP 及以上</p>
+                    
+                    <div class="flex gap-2">
+                        <button class="download-btn flex-1 bg-primary text-white py-2 px-2 rounded-lg font-medium hover:bg-secondary transition-colors flex items-center justify-center text-xs" data-platform="windows">
+                            <i class="fa fa-download mr-1"></i> <span class="btn-text">下载</span>
                         </button>
+                        <a href="#" class="manual-link flex-1 bg-white border border-gray-200 text-neutral-700 py-2 px-2 rounded-lg font-medium hover:bg-gray-50 transition-colors flex items-center justify-center text-xs" data-platform="windows">
+                            <i class="fa fa-book mr-1"></i> <span class="btn-text">手册</span>
+                        </a>
                     </div>
                 </div>
 
                 <!-- macOS -->
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
-                    <div class="h-3 bg-gray-700"></div>
-                    <div class="p-6">
-                        <div class="w-14 h-14 bg-gray-100 rounded-lg flex items-center justify-center mb-4">
-                            <i class="fa fa-apple text-2xl text-gray-800"></i>
-                        </div>
-                        <h4 class="text-xl font-semibold mb-2">macOS</h4>
-                        <p class="text-neutral-600 mb-4">适用于macOS 10.13 及以上版本系统</p>
-                        <!-- 用户手册链接 -->
-                        <a href="#" class="inline-flex items-center text-primary hover:text-primary/80 text-sm mb-4 manual-link" data-platform="macos">
-                            <i class="fa fa-book mr-1"></i>
-                            <span>查看使用手册</span>
-                        </a>
-                        <button class="download-btn w-full bg-primary text-white py-3 px-4 rounded-lg font-medium btn-hover flex items-center justify-center" data-platform="macos">
-                            <i class="fa fa-download mr-2"></i> 下载客户端
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover group p-6 text-center">
+                    <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                        <i class="fa fa-apple text-4xl text-neutral-800"></i>
+                    </div>
+                    <h4 class="text-lg font-bold mb-1">macOS</h4>
+                    <p class="text-xs text-neutral-400 mb-6">10.13+</p>
+                    
+                    <div class="flex gap-2">
+                        <button class="download-btn flex-1 bg-primary text-white py-2 px-2 rounded-lg font-medium hover:bg-secondary transition-colors flex items-center justify-center text-xs" data-platform="macos">
+                            <i class="fa fa-download mr-1"></i> <span class="btn-text">下载</span>
                         </button>
+                        <a href="#" class="manual-link flex-1 bg-white border border-gray-200 text-neutral-700 py-2 px-2 rounded-lg font-medium hover:bg-gray-50 transition-colors flex items-center justify-center text-xs" data-platform="macos">
+                            <i class="fa fa-book mr-1"></i> <span class="btn-text">手册</span>
+                        </a>
                     </div>
                 </div>
 
                 <!-- Linux -->
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
-                    <div class="h-3 bg-orange-500"></div>
-                    <div class="p-6">
-                        <div class="w-14 h-14 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
-                            <i class="fa fa-linux text-2xl text-orange-600"></i>
-                        </div>
-                        <h4 class="text-xl font-semibold mb-2">Linux</h4>
-                        <p class="text-neutral-600 mb-4">适用于主流Linux发行版系统</p>
-                        <!-- 用户手册链接 -->
-                        <a href="#" class="inline-flex items-center text-primary hover:text-primary/80 text-sm mb-4 manual-link" data-platform="linux">
-                            <i class="fa fa-book mr-1"></i>
-                            <span>查看使用手册</span>
-                        </a>
-                        <button class="download-btn w-full bg-primary text-white py-3 px-4 rounded-lg font-medium btn-hover flex items-center justify-center" data-platform="linux">
-                            <i class="fa fa-download mr-2"></i> 下载客户端
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover group p-6 text-center">
+                    <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                        <i class="fa fa-linux text-4xl text-orange-600"></i>
+                    </div>
+                    <h4 class="text-lg font-bold mb-1">Linux</h4>
+                    <p class="text-xs text-neutral-400 mb-6">主流发行版</p>
+                    
+                    <div class="flex gap-2">
+                        <button class="download-btn flex-1 bg-primary text-white py-2 px-2 rounded-lg font-medium hover:bg-secondary transition-colors flex items-center justify-center text-xs" data-platform="linux">
+                            <i class="fa fa-download mr-1"></i> <span class="btn-text">下载</span>
                         </button>
+                        <a href="#" class="manual-link flex-1 bg-white border border-gray-200 text-neutral-700 py-2 px-2 rounded-lg font-medium hover:bg-gray-50 transition-colors flex items-center justify-center text-xs" data-platform="linux">
+                            <i class="fa fa-book mr-1"></i> <span class="btn-text">手册</span>
+                        </a>
                     </div>
                 </div>
-            </div>
 
-            <!-- 移动平台 -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- iOS -->
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
-                    <div class="h-3 bg-gray-100"></div>
-                    <div class="p-6">
-                        <div class="w-14 h-14 bg-gray-100 rounded-lg flex items-center justify-center mb-4">
-                            <i class="fa fa-apple text-2xl text-gray-800"></i>
-                        </div>
-                        <h4 class="text-xl font-semibold mb-2">iOS</h4>
-                        <p class="text-neutral-600 mb-4">适用于iOS 6.0 及以上版本设备</p>
-                        <!-- 用户手册链接 -->
-                        <a href="#" class="inline-flex items-center text-primary hover:text-primary/80 text-sm mb-4 manual-link" data-platform="ios">
-                            <i class="fa fa-book mr-1"></i>
-                            <span>查看使用手册</span>
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover group p-6 text-center">
+                    <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                        <i class="fa fa-apple text-4xl text-neutral-800"></i>
+                    </div>
+                    <h4 class="text-lg font-bold mb-1">iOS</h4>
+                    <p class="text-xs text-neutral-400 mb-6">iPhone & iPad</p>
+                    
+                    <div class="flex flex-col gap-3">
+                        <a href="https://apps.apple.com/cn/app/cisco-secure-client/id1135064690" target="_blank" class="w-full bg-primary text-white py-2.5 px-4 rounded-lg font-medium hover:bg-secondary transition-colors flex items-center justify-center text-sm" id="iosDownloadBtn">
+                            <i class="fa fa-download mr-2"></i> <span class="btn-text">App Store</span>
                         </a>
                         <div class="flex gap-3">
-                            <!-- iOS下载按钮改为直接链接 -->
-                            <a href="https://apps.apple.com/us/app/cisco-secure-client/id1135064690" target="_blank" class="flex-1 bg-primary text-white py-3 px-4 rounded-lg font-medium btn-hover flex items-center justify-center">
-                                <i class="fa fa-download mr-2"></i> 下载客户端
+                            <a href="#" class="manual-link flex-1 bg-white border border-gray-200 text-neutral-700 py-2.5 px-4 rounded-lg font-medium hover:bg-gray-50 transition-colors flex items-center justify-center text-sm" data-platform="ios">
+                                <i class="fa fa-book"></i>
                             </a>
-                            <button class="qr-btn flex-1 bg-neutral-100 text-neutral-800 py-3 px-4 rounded-lg font-medium btn-hover flex items-center justify-center" data-platform="ios">
-                                <i class="fa fa-qrcode mr-2"></i> 显示二维码
+                            <button class="qr-btn flex-1 bg-white border border-gray-200 text-neutral-700 py-2.5 px-4 rounded-lg font-medium hover:bg-gray-50 transition-colors flex items-center justify-center text-sm" data-platform="ios">
+                                <i class="fa fa-qrcode"></i>
                             </button>
                         </div>
                     </div>
                 </div>
 
                 <!-- Android -->
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
-                    <div class="h-3 bg-green-500"></div>
-                    <div class="p-6">
-                        <div class="w-14 h-14 bg-green-100 rounded-lg flex items-center justify-center mb-4">
-                            <i class="fa fa-android text-2xl text-green-600"></i>
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover group p-6 text-center">
+                    <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                        <i class="fa fa-android text-4xl text-green-600"></i>
+                    </div>
+                    <h4 class="text-lg font-bold mb-1">Android</h4>
+                    <p class="text-xs text-neutral-400 mb-6">5.0+</p>
+                    
+                    <div class="flex flex-col gap-3">
+                        <button class="download-btn w-full bg-primary text-white py-2.5 px-4 rounded-lg font-medium hover:bg-secondary transition-colors flex items-center justify-center text-sm" data-platform="android">
+                            <i class="fa fa-download mr-2"></i> <span class="btn-text">下载 APK</span>
+                        </button>
+                        <div class="flex gap-3">
+                            <a href="#" class="manual-link flex-1 bg-white border border-gray-200 text-neutral-700 py-2.5 px-4 rounded-lg font-medium hover:bg-gray-50 transition-colors flex items-center justify-center text-sm" data-platform="android">
+                                <i class="fa fa-book"></i>
+                            </a>
+                            <button class="qr-btn flex-1 bg-white border border-gray-200 text-neutral-700 py-2.5 px-4 rounded-lg font-medium hover:bg-gray-50 transition-colors flex items-center justify-center text-sm" data-platform="android">
+                                <i class="fa fa-qrcode"></i>
+                            </button>
                         </div>
-                        <h4 class="text-xl font-semibold mb-2">Android</h4>
-                        <p class="text-neutral-600 mb-4">适用于Android 5.0 及以上版本设备</p>
-                        <!-- 用户手册链接 -->
-                        <a href="#" class="inline-flex items-center text-primary hover:text-primary/80 text-sm mb-4 manual-link" data-platform="android">
-                            <i class="fa fa-book mr-1"></i>
-                            <span>查看使用手册</span>
+                    </div>
+                </div>
+
+                <!-- HarmonyOS -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover group p-6 text-center">
+                    <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                        <i class="fa fa-mobile text-4xl text-red-600"></i>
+                    </div>
+                    <h4 class="text-lg font-bold mb-1">HarmonyOS</h4>
+                    <p class="text-xs text-neutral-400 mb-6">Next / 4.0+</p>
+                    
+                    <div class="flex flex-col gap-3">
+                        <a href="#" target="_blank" class="w-full bg-primary text-white py-2.5 px-4 rounded-lg font-medium hover:bg-secondary transition-colors flex items-center justify-center text-sm" id="harmonyDownloadBtn">
+                            <i class="fa fa-download mr-2"></i> <span class="btn-text">AppGallery</span>
                         </a>
                         <div class="flex gap-3">
-                            <button class="download-btn flex-1 bg-primary text-white py-3 px-4 rounded-lg font-medium btn-hover flex items-center justify-center" data-platform="android">
-                                <i class="fa fa-download mr-2"></i> 下载客户端
-                            </button>
-                            <button class="qr-btn flex-1 bg-neutral-100 text-neutral-800 py-3 px-4 rounded-lg font-medium btn-hover flex items-center justify-center" data-platform="android">
-                                <i class="fa fa-qrcode mr-2"></i> 显示二维码
+                            <a href="#" class="manual-link flex-1 bg-white border border-gray-200 text-neutral-700 py-2.5 px-4 rounded-lg font-medium hover:bg-gray-50 transition-colors flex items-center justify-center text-sm" data-platform="harmony">
+                                <i class="fa fa-book"></i>
+                            </a>
+                            <button class="qr-btn flex-1 bg-white border border-gray-200 text-neutral-700 py-2.5 px-4 rounded-lg font-medium hover:bg-gray-50 transition-colors flex items-center justify-center text-sm" data-platform="harmony">
+                                <i class="fa fa-qrcode"></i>
                             </button>
                         </div>
                     </div>
@@ -210,19 +275,41 @@
             </div>
         </section>
 
-        <!-- 其他开源客户端（默认隐藏，有数据才显示） -->
-        <section id="otherClientsSection" class="max-w-5xl mx-auto mb-16 hidden">
-            <h3 class="text-xl sm:text-2xl font-bold mb-8 text-center">开源客户端</h3>
-            <div id="otherClientsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- 内容将通过JavaScript动态生成 -->
+        <!-- 其他开源客户端 -->
+        <div id="openConnectSection" class="hidden">
+            <div class="flex items-center justify-center mb-12">
+                <div class="h-px bg-gray-200 w-24"></div>
+                <h3 id="footerTitle" class="text-xl font-bold mx-6 text-neutral-800">OpenConnect 开源客户端</h3>
+                <div class="h-px bg-gray-200 w-24"></div>
             </div>
-        </section>
+
+            <section id="otherClientsSection" class="max-w-5xl mx-auto mb-16">
+                <div id="otherClientsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- 内容将通过JavaScript动态生成 -->
+                </div>
+            </section>
+        </div>
+
+        <!-- 其他客户端 (Custom) -->
+        <div id="customClientsSection" class="hidden">
+            <div class="flex items-center justify-center mb-12">
+                <div class="h-px bg-gray-200 w-24"></div>
+                <h3 class="text-xl font-bold mx-6 text-neutral-800">其他开源客户端</h3>
+                <div class="h-px bg-gray-200 w-24"></div>
+            </div>
+
+            <section class="max-w-5xl mx-auto mb-16">
+                <div id="customClientsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- 内容将通过JavaScript动态生成 -->
+                </div>
+            </section>
+        </div>
     </main>
 
     <!-- 页脚 -->
-    <footer class="bg-white/80 backdrop-blur-md border-t border-neutral-200 py-8 relative z-10">
-        <div class="container mx-auto px-4 text-center text-neutral-500 text-sm">
-            <p>© 2025 Cisco Secure Client . 页面归属 . <a href="https://blog.yydy.link" target="_blank" class="text-primary hover:underline">BLOG.YYDY.LINK</a></p>
+    <footer class="bg-gray-50 border-t border-gray-200 py-12 relative z-10">
+        <div class="container mx-auto px-4 text-center">
+            <p id="footerCopyright" class="text-neutral-400 text-sm">© 2025 Cisco Secure Client Navigation. Powered by BLOG.YYDY.LINK</p>
         </div>
     </footer>
 
@@ -273,6 +360,7 @@
             if (p === 'windows' || p === 'win') return 'Windows';
             if (p === 'linux') return 'Linux';
             if (p === 'android') return 'Android';
+            if (p === 'harmony' || p === 'harmonyos') return 'HarmonyOS';
             return platform.charAt(0).toUpperCase() + platform.slice(1);
         }
 
@@ -282,6 +370,7 @@
             const p = String(platform).toLowerCase().trim();
             if (p === 'ios') return 'manualIOS';
             if (p === 'macos' || p === 'mac os' || p === 'mac') return 'manualMacOS';
+            if (p === 'harmony' || p === 'harmonyos') return 'manualHarmony';
             // 默认 manual + 首字母大写其余原样（Windows -> manualWindows, Linux -> manualLinux, Android -> manualAndroid）
             return 'manual' + platform.charAt(0).toUpperCase() + platform.slice(1);
         }
@@ -492,59 +581,280 @@
 
         // 更新UI显示
         function updateUI(data) {
-            // 更新标题和文本
-            document.getElementById('headerTitle').textContent = data.texts?.title || 'Cisco Secure Client';
-            document.getElementById('mainTitle').textContent = data.texts?.title || 'Cisco Secure Client';
-            document.getElementById('mainSubtitle').textContent = data.texts?.subtitle || '安全连接，无处不在。下载适用于您设备的Cisco Secure Client客户端，轻松建立安全连接。';
-            document.getElementById('downloadSectionTitle').textContent = data.texts?.downloadSectionTitle || '选择您的平台下载';
+            const texts = data.texts || {};
+            const nav = data.headerNav || {};
+            const banner = data.banner || {};
 
-            // 更新用户手册链接（使用 platformToTextKey / prettyPlatformName）
-            Object.keys(data.manuals || {}).forEach(platform => {
-                const link = document.querySelector(`.manual-link[data-platform="${platform}"]`);
-                if (link && data.manuals[platform]) {
-                    link.href = data.manuals[platform];
-                    const textElem = link.querySelector('span');
-                    if (textElem) {
-                        const textKey = platformToTextKey(platform);
-                        textElem.textContent = (data.texts && data.texts[textKey]) || `${prettyPlatformName(platform)} 使用手册`;
-                    }
+            // Update Banner
+            const bannerSection = document.getElementById('bannerSection');
+            if (banner.visible !== false) {
+                bannerSection.classList.remove('hidden');
+                document.getElementById('bannerLink').href = banner.link || '#';
+                
+                const icon = document.getElementById('bannerIcon');
+                const iconContainer = icon.parentElement;
+                if (banner.image) {
+                    icon.src = banner.image;
+                    icon.classList.remove('hidden');
+                    iconContainer.classList.remove('hidden');
+                } else {
+                    icon.classList.add('hidden');
+                    iconContainer.classList.add('hidden');
+                }
+
+                // Create text content once
+                const textHtml = `
+                    <span class="text-neutral-600">${banner.text1 || ''}</span>
+                    <span class="text-red-600 font-bold mx-1">${banner.text2 || ''}</span>
+                    <span class="text-green-600 font-bold mx-1">${banner.text3 || ''}</span>
+                    <span class="text-neutral-600">${banner.text4 || ''}</span>
+                `;
+
+                // Inject duplicated content for seamless scrolling
+                const container = document.getElementById('bannerTextContainer');
+                container.innerHTML = `
+                    <div class="inline-flex items-center gap-1 pr-24">${textHtml}</div>
+                    <div class="inline-flex items-center gap-1 pr-24">${textHtml}</div>
+                `;
+            } else {
+                bannerSection.classList.add('hidden');
+            }
+
+            // 更新Header按钮
+            const btn1 = document.getElementById('headerBtn1');
+            const btn2 = document.getElementById('headerBtn2');
+            const btn3 = document.getElementById('headerBtn3');
+            
+            if (btn1) { 
+                if (nav.btn1?.visible !== false) {
+                    btn1.style.display = 'inline-block';
+                    btn1.textContent = nav.btn1?.text || '飞将咨询'; 
+                    // 绑定点击事件打开二维码
+                    btn1.onclick = () => openQrModal('consulting');
+                } else {
+                    btn1.style.display = 'none';
+                }
+            }
+            
+            if (btn2) { 
+                if (nav.btn2?.visible !== false) {
+                    btn2.style.display = 'inline-block';
+                    btn2.textContent = nav.btn2?.text || '飞将官网'; 
+                    btn2.href = nav.btn2?.url || '#'; 
+                } else {
+                    btn2.style.display = 'none';
+                }
+            }
+            
+            if (btn3) { 
+                if (nav.btn3?.visible !== false) {
+                    btn3.style.display = 'inline-block';
+                    btn3.textContent = nav.btn3?.text || '博客站'; 
+                    btn3.href = nav.btn3?.url || '#'; 
+                } else {
+                    btn3.style.display = 'none';
+                }
+            }
+
+            // 更新Hero区域
+            document.getElementById('headerTitle').textContent = texts.title || 'Cisco Secure Client';
+            // 尝试保持Title的样式
+            const titleHtml = texts.title ? texts.title.replace('Secure Client', '<span class="text-primary">Secure Client</span>') : 'Cisco <span class="text-primary">Secure Client</span>';
+            document.getElementById('mainTitle').innerHTML = titleHtml;
+            
+            document.getElementById('vpnVersionVal').textContent = texts.vpnVersion || 'v5.1.1.145';
+            document.getElementById('uiVersionVal').textContent = texts.uiVersion || 'v5.1.14.1452';
+            document.getElementById('updateDateVal').textContent = texts.updateDate || '2025-12-25';
+            
+            const heroBtnText = document.getElementById('heroBtnText');
+            if (heroBtnText) heroBtnText.textContent = texts.heroBtnText || '立即下载';
+
+            document.getElementById('downloadSectionTitle').textContent = texts.downloadSectionTitle || '选择您的平台';
+            document.getElementById('downloadSectionSubtitle').textContent = texts.downloadSectionSubtitle || '支持全平台设备的无缝接入体验';
+            
+            const footerTitle = document.getElementById('footerTitle');
+            if (footerTitle) footerTitle.textContent = texts.footerTitle || 'OpenConnect 开源客户端';
+            
+            const footerCopyright = document.getElementById('footerCopyright');
+            if (footerCopyright) footerCopyright.innerHTML = texts.footerCopyright || '© 2025 Cisco Secure Client Navigation. Powered by BLOG.YYDY.LINK';
+
+            // 更新通用按钮文本
+            const commonDownloadText = texts.commonDownloadText || '下载';
+            const commonManualText = texts.commonManualText || '手册';
+            
+            document.querySelectorAll('.download-btn .btn-text').forEach(el => {
+                // 排除iOS和Android的特定按钮
+                const parent = el.closest('button') || el.closest('a');
+                const platform = parent.getAttribute('data-platform');
+                // 注意：iOS/Android按钮可能不是 .download-btn 类，或者有特定逻辑
+                // 这里我们只更新桌面端的通用下载按钮
+                if (platform === 'windows' || platform === 'macos' || platform === 'linux') {
+                    el.textContent = commonDownloadText;
                 }
             });
 
-            // 更新其他客户端
-            const otherClientsSection = document.getElementById('otherClientsSection');
-            const otherClientsContainer = document.getElementById('otherClientsContainer');
+            document.querySelectorAll('.manual-link .btn-text').forEach(el => {
+                el.textContent = commonManualText;
+            });
 
-            if (data.otherClients && data.otherClients.length > 0) {
-                otherClientsSection.classList.remove('hidden');
-                otherClientsContainer.innerHTML = '';
+            // 更新用户手册链接
+            Object.keys(data.manuals || {}).forEach(platform => {
+                const link = document.querySelector(`.manual-link[data-platform="${platform}"]`);
+                if (link) {
+                    if (data.manuals[platform]) {
+                        link.href = data.manuals[platform];
+                        link.classList.remove('opacity-50', 'pointer-events-none');
+                    } else {
+                        link.classList.add('opacity-50', 'pointer-events-none');
+                    }
+                    
+                    // 更新按钮文本 (如果有特定配置)
+                    const textKey = platformToTextKey(platform);
+                    // 这里我们保持 "手册" 两个字，除非有特殊需求修改
+                }
+            });
 
-                data.otherClients.forEach(client => {
+            // 更新下载按钮文本 (iOS/Android)
+            const iosBtn = document.getElementById('iosDownloadBtn');
+            if (iosBtn) {
+                if (texts.iosDownloadUrl) {
+                    iosBtn.href = texts.iosDownloadUrl;
+                }
+                const iosBtnText = iosBtn.querySelector('.btn-text');
+                if (iosBtnText && texts.iosButtonText) {
+                    iosBtnText.textContent = texts.iosButtonText;
+                }
+            }
+
+            const androidBtnText = document.querySelector('button[data-platform="android"] .btn-text');
+            if (androidBtnText && texts.androidButtonText) androidBtnText.textContent = texts.androidButtonText;
+
+            // Update HarmonyOS button
+            const harmonyBtn = document.getElementById('harmonyDownloadBtn');
+            if (harmonyBtn) {
+                if (data.downloads?.harmony) {
+                    harmonyBtn.href = data.downloads.harmony;
+                }
+            }
+
+
+            // 更新OpenConnect客户端
+            renderClientList(data.openConnectClients, 'openConnectSection', 'otherClientsContainer');
+
+            // 更新其他客户端 (Custom)
+            renderClientList(data.customClients, 'customClientsSection', 'customClientsContainer');
+        }
+
+        // 渲染客户端列表通用函数
+        function renderClientList(clients, sectionId, containerId) {
+            const section = document.getElementById(sectionId);
+            const container = document.getElementById(containerId);
+            
+            if (clients && clients.length > 0) {
+                section.classList.remove('hidden');
+                container.innerHTML = '';
+
+                clients.forEach(client => {
                     const clientCard = document.createElement('div');
-                    clientCard.className = 'bg-white rounded-xl shadow p-6 card-hover';
+                    // Updated container styles based on screenshot
+                    clientCard.className = 'bg-white rounded-2xl border border-blue-100 p-6 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col h-full';
+                    
+                    const iconClass = client.icon || 'fa-globe';
+                    
+                    // Dynamic icon colors
+                    let iconBg = 'bg-blue-50';
+                    let iconText = 'text-blue-600';
+                    if (iconClass.includes('android')) { iconBg = 'bg-green-50'; iconText = 'text-green-600'; }
+                    else if (iconClass.includes('apple')) { iconBg = 'bg-gray-100'; iconText = 'text-gray-800'; }
+                    else if (iconClass.includes('linux')) { iconBg = 'bg-orange-50'; iconText = 'text-orange-600'; }
+                    else if (iconClass.includes('mobile')) { iconBg = 'bg-indigo-50'; iconText = 'text-indigo-600'; }
+                    else if (iconClass.includes('windows')) { iconBg = 'bg-blue-50'; iconText = 'text-blue-600'; }
+                    
                     clientCard.innerHTML = `
-                        <h4 class="text-lg font-semibold mb-2">${client.name}</h4>
-                        <p class="text-sm text-neutral-600 mb-2">适配系统: ${client.os}</p>
-                        <div class="flex flex-wrap gap-3 mt-4">
-                            <a href="${client.url}" target="_blank" class="inline-flex items-center bg-primary/10 text-primary px-4 py-2 rounded-lg text-sm hover:bg-primary/20 transition-colors">
-                                <i class="fa fa-download mr-2"></i> 下载
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-14 h-14 rounded-full ${iconBg} ${iconText} flex items-center justify-center shrink-0">
+                                <i class="fa ${iconClass} text-2xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold text-gray-900 leading-tight">${client.name}</h4>
+                                <p class="text-sm text-gray-500 mt-1">${client.os || '通用'}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex-grow"></div>
+                        
+                        <div class="flex gap-3">
+                            <a href="${client.url}" target="_blank" class="flex-1 bg-blue-50 text-blue-600 border border-blue-100 py-2 px-3 rounded-lg font-medium hover:bg-blue-100 transition-colors flex items-center justify-center text-sm">
+                                下载
                             </a>
-                            <a href="${client.manual}" target="_blank" class="inline-flex items-center bg-neutral-100 text-neutral-700 px-4 py-2 rounded-lg text-sm hover:bg-neutral-200 transition-colors">
-                                <i class="fa fa-book mr-2"></i> 手册
+                            <a href="${client.manual}" target="_blank" class="flex-1 bg-white text-gray-600 border border-gray-200 py-2 px-3 rounded-lg font-medium hover:bg-gray-50 transition-colors flex items-center justify-center text-sm">
+                                手册
                             </a>
+                            ${client.qrCode ? `
+                            <button onclick="openClientQrModal('${client.name}', '${client.qrCode}')" class="w-10 shrink-0 flex items-center justify-center bg-white text-gray-400 border border-gray-200 rounded-lg hover:text-gray-600 hover:border-gray-300 transition-colors">
+                                <i class="fa fa-qrcode"></i>
+                            </button>
+                            ` : ''}
                         </div>
                     `;
-                    otherClientsContainer.appendChild(clientCard);
+                    container.appendChild(clientCard);
                 });
             } else {
-                otherClientsSection.classList.add('hidden');
+                section.classList.add('hidden');
             }
         }
 
         // 打开用户手册
         function openManual(platform) {
-            if (!appData || !appData.manuals || !appData.manuals[platform]) return;
-            window.open(appData.manuals[platform], '_blank');
+            if (!appData || !appData.manuals) return;
+            
+            const manualData = appData.manuals[platform];
+            
+            // 如果是 macOS, Linux 或 Android，且是对象形式（新数据结构），则打开弹窗
+            if ((platform === 'macos' || platform === 'linux' || platform === 'android') && typeof manualData === 'object') {
+                openManualModal(platform, manualData);
+                return;
+            }
+            
+            // 兼容旧数据或单链接平台
+            if (manualData) {
+                if (typeof manualData === 'string') {
+                    window.open(manualData, '_blank');
+                } else if (typeof manualData === 'object' && platform === 'windows' && manualData.link1) {
+                    // Fallback for windows if it's still an object
+                    window.open(manualData.link1, '_blank');
+                }
+            }
+        }
+
+        // 打开手册弹窗
+        function openManualModal(platform, data) {
+            const modal = document.getElementById('downloadModal'); // 复用下载弹窗样式
+            const modalTitle = document.getElementById('modalTitle');
+            const versionOptions = document.getElementById('versionOptions');
+
+            modalTitle.innerHTML = `<i class="fa fa-book text-blue-500 mr-2"></i> ${prettyPlatformName(platform)} 使用手册`;
+            versionOptions.innerHTML = '';
+
+            if (platform === 'macos') {
+                if (data.appStore) addVersionOption(versionOptions, 'App Store 版手册', data.appStore);
+                if (data.dmg) addVersionOption(versionOptions, 'DMG 桌面版手册', data.dmg);
+            } else if (platform === 'linux') {
+                if (data.server) addVersionOption(versionOptions, 'Server 版配置', data.server);
+                if (data.desktop) addVersionOption(versionOptions, 'Desktop 版配置', data.desktop);
+            } else if (platform === 'android') {
+                if (data.latest) addVersionOption(versionOptions, '新版本使用指南', data.latest);
+                if (data.old) addVersionOption(versionOptions, '旧版本使用指南', data.old);
+            }
+
+            // 修改图标为手册图标 (可选优化，这里复用下载样式所以还是下载图标，可以改成external link)
+            const icons = versionOptions.querySelectorAll('.fa-download');
+            icons.forEach(icon => {
+                icon.classList.remove('fa-download');
+                icon.classList.add('fa-external-link');
+            });
+
+            modal.classList.add('active');
         }
 
         // 打开下载弹窗
@@ -562,39 +872,30 @@
             const platformData = downloads[platform];
 
             if (platform === 'windows' && platformData) {
-                if (platformData.amd) {
-                    addVersionOption(versionOptions, 'Windows (AMD64)', platformData.amd);
-                }
-                if (platformData.arm) {
-                    addVersionOption(versionOptions, 'Windows (ARM64)', platformData.arm);
-                }
+                if (platformData.amdLatest) addVersionOption(versionOptions, 'AMD64 最新版', platformData.amdLatest);
+                if (platformData.amdStable) addVersionOption(versionOptions, 'AMD64 稳定版', platformData.amdStable);
+                if (platformData.armLatest) addVersionOption(versionOptions, 'ARM64 最新版', platformData.armLatest);
+                if (platformData.armStable) addVersionOption(versionOptions, 'ARM64 稳定版', platformData.armStable);
+                if (platformData.win7Amd) addVersionOption(versionOptions, 'Win7/8 AMD64 老版本', platformData.win7Amd);
+                if (platformData.win7Arm) addVersionOption(versionOptions, 'Win7/8 ARM64 老版本', platformData.win7Arm);
             }
             else if (platform === 'macos' && platformData) {
-                if (platformData.intel) {
-                    addVersionOption(versionOptions, 'macOS (Intel)', platformData.intel);
-                }
-                if (platformData.arm) {
-                    addVersionOption(versionOptions, 'macOS (Apple Silicon)', platformData.arm);
-                }
-                if (platformData.appStore) {
-                    addVersionOption(versionOptions, 'macOS (App Store)', platformData.appStore);
-                }
+                if (platformData.intel) addVersionOption(versionOptions, 'Intel 芯片版', platformData.intel);
+                if (platformData.silicon) addVersionOption(versionOptions, 'Apple Silicon (M1/M2/M3)', platformData.silicon);
+                if (platformData.oldOsx) addVersionOption(versionOptions, 'OSX (Maverick/Yosemite) 老版本', platformData.oldOsx);
+                if (platformData.appStore) addVersionOption(versionOptions, 'App Store 版本', platformData.appStore);
             }
             else if (platform === 'linux' && platformData) {
-                if (platformData.deb) {
-                    addVersionOption(versionOptions, 'Linux AMD64 (Debian/Ubuntu/Deepin)', platformData.deb);
-                }
-                if (platformData.rpm) {
-                    addVersionOption(versionOptions, 'Linux AMD64 (RedHat/CentOS/Fedora)', platformData.rpm);
-                }
+                if (platformData.amdDeb) addVersionOption(versionOptions, 'Linux AMD64 (Debian/Ubuntu | deb)', platformData.amdDeb);
+                if (platformData.amdRpm) addVersionOption(versionOptions, 'Linux AMD64 (RedHat/CentOS | rpm)', platformData.amdRpm);
+                if (platformData.armDeb) addVersionOption(versionOptions, 'Linux ARM64 (Debian/Ubuntu | deb)', platformData.armDeb);
+                if (platformData.armRpm) addVersionOption(versionOptions, 'Linux ARM64 (RedHat/CentOS | rpm)', platformData.armRpm);
+                if (platformData.amdOther) addVersionOption(versionOptions, 'Linux AMD64 Other (非deb/rpm)', platformData.amdOther);
+                if (platformData.armOther) addVersionOption(versionOptions, 'Linux ARM64 Other (非deb/rpm)', platformData.armOther);
             }
             else if (platform === 'android' && platformData) {
-                if (platformData.latest) {
-                    addVersionOption(versionOptions, 'Android (新版本)', platformData.latest);
-                }
-                if (platformData.old) {
-                    addVersionOption(versionOptions, 'Android (旧版本)', platformData.old);
-                }
+                if (platformData.latest) addVersionOption(versionOptions, '最新版本 APK', platformData.latest);
+                if (platformData.old) addVersionOption(versionOptions, '旧版本 APK', platformData.old);
             }
 
             modal.classList.add('active');
@@ -609,12 +910,15 @@
         // 添加版本选项到弹窗
         function addVersionOption(container, label, url) {
             const option = document.createElement('div');
-            option.className = 'p-4 border border-neutral-200 rounded-lg';
+            // 样式调整：更紧凑的列表样式，背景色改为白色，边框更细
+            option.className = 'group flex items-center justify-between p-3 bg-white border border-gray-100 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer';
+            
+            // 点击整个选项区域触发下载
+            option.onclick = () => window.open(url, '_blank');
+            
             option.innerHTML = `
-                <h5 class="font-medium mb-2">${label}</h5>
-                <a href="${url}" target="_blank" class="inline-flex items-center bg-primary text-white px-4 py-2 rounded-lg text-sm btn-hover">
-                    <i class="fa fa-download mr-2"></i> 下载
-                </a>
+                <span class="text-sm font-medium text-gray-700 group-hover:text-primary transition-colors">${label}</span>
+                <i class="fa fa-download text-gray-400 group-hover:text-primary transition-colors text-sm"></i>
             `;
             container.appendChild(option);
         }
@@ -626,12 +930,29 @@
             const modal = document.getElementById('qrModal');
             const qrModalTitle = document.getElementById('qrModalTitle');
             const qrImage = document.getElementById('qrImage');
+            
+            let titleText = '';
+            let qrPath = '';
+            let hintText = '请使用手机扫描二维码下载';
 
-            qrModalTitle.textContent = `${prettyPlatformName(platform)} 扫码下载`;
-            const qrCodePath = appData.qrcodes?.[platform] || `img/${platform}-qr.png`;
-            qrImage.src = qrCodePath;
-            qrImage.alt = `${prettyPlatformName(platform)} 下载二维码`;
+            if (platform === 'consulting') {
+                const nav = appData.headerNav || {};
+                titleText = nav.btn1?.text || '咨询';
+                qrPath = appData.qrcodes?.consulting || '';
+                hintText = '请扫描上方二维码进行咨询';
+            } else {
+                titleText = `${prettyPlatformName(platform)} 扫码下载`;
+                qrPath = appData.qrcodes?.[platform] || `img/${platform}-qr.png`;
+            }
 
+            qrModalTitle.textContent = titleText;
+            qrImage.src = qrPath;
+            qrImage.alt = titleText;
+            
+            // 更新提示文字
+            const hintP = modal.querySelector('p.text-sm');
+            if (hintP) hintP.textContent = hintText;
+            
             modal.classList.add('active');
         }
 
@@ -640,7 +961,23 @@
             const modal = document.getElementById('qrModal');
             modal.classList.remove('active');
         }
+
+        // 打开自定义客户端二维码
+        function openClientQrModal(title, path) {
+            const modal = document.getElementById('qrModal');
+            const qrModalTitle = document.getElementById('qrModalTitle');
+            const qrImage = document.getElementById('qrImage');
+            
+            qrModalTitle.textContent = title;
+            qrImage.src = path;
+            qrImage.alt = title;
+            
+            // 更新提示文字
+            const hintP = modal.querySelector('p.text-sm');
+            if (hintP) hintP.textContent = '请使用手机扫描二维码下载';
+            
+            modal.classList.add('active');
+        }
     </script>
 </body>
 </html>
-
