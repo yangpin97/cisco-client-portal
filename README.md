@@ -12,4 +12,4 @@ v1.1 版本支持docker，windwos，linux部署
 
 详细使用教程请阅读：搭建 [Cisco Secure Client 下载导航页](https://blog.yydy.link/archives/2018.html)
 
-![yydy_2025-12-28_21-15-28](https://github.com/user-attachments/assets/88b38340-1271-4157-8a5b-257bdf961ca0)
+![yydy_2025-12-28_21-20-53](https://github.com/user-attachments/assets/6132f79c-4fec-420f-8fb1-acfb0185ecb8)
