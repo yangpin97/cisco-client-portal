@@ -1,45 +1,212 @@
 {
   "admin": {
     "username": "admin",
-    "password": "$2a$10$41opYJykxqWm/hJpoUPEv.7tTAOtd7zeZN61U0qp3u3YEW8bzrDQW"
+    "password": "$2a$10$7zc2W6OBSAElWz7FljChBOBFDG3.nObfbzJSXn6/LBVlu6gzFJKwu"
   },
   "texts": {
     "title": "Cisco Secure Client",
-    "subtitle": "安全连接，无处不在，下载适用于您设备的Cisco Secure Client客户端，轻松建立安全连接。",
     "downloadSectionTitle": "选择您的平台下载",
-    "iosButtonText": "iOS",
-    "androidButtonText": "Android"
+    "downloadSectionSubtitle": "支持全平台设备安全无缝接入体验",
+    "iosButtonText": "App Store",
+    "androidButtonText": "下载 APK",
+    "headerBtn1Text": "飞将咨询",
+    "headerBtn1Url": "img/qiweiqr.png",
+    "headerBtn1Visible": true,
+    "headerBtn2Text": "飞将官网",
+    "headerBtn2Url": "https://www.feijiangkeji.com",
+    "headerBtn2Visible": true,
+    "headerBtn3Text": "博客站",
+    "headerBtn3Url": "https://blog.yydy.link",
+    "headerBtn3Visible": true,
+    "vpnVersion": "v5.1.1.145",
+    "uiVersion": "v5.1.14.1452",
+    "updateDate": "2025 年 12 月 25 号",
+    "heroBtnText": "立即下载",
+    "commonDownloadText": "下载",
+    "commonManualText": "手册",
+    "footerCopyright": "© 2025 Cisco Secure Client Navigation. Powered by BLOG.YYDY.LINK",
+    "footerTitle": "OpenConnect 开源客户端",
+    "iosDownloadUrl": "https://apps.apple.com/cn/app/cisco-secure-client/id1135064690"
   },
   "downloads": {
     "windows": {
-      "amd": "",
-      "arm": ""
+      "amdLatest": "https://blog.yydy.link",
+      "amdStable": "https://blog.yydy.link",
+      "armLatest": "https://blog.yydy.link",
+      "armStable": "https://blog.yydy.link",
+      "win7Amd": "https://blog.yydy.link",
+      "win7Arm": "https://blog.yydy.link"
     },
     "macos": {
-      "intel": "",
-      "arm": "",
-      "appStore": ""
+      "intel": "https://blog.yydy.link",
+      "silicon": "https://blog.yydy.link",
+      "oldOsx": "https://blog.yydy.link",
+      "appStore": "https://blog.yydy.link"
     },
     "linux": {
-      "deb": "",
-      "rpm": ""
+      "amdDeb": "https://blog.yydy.link",
+      "amdRpm": "https://blog.yydy.link",
+      "armDeb": "https://blog.yydy.link",
+      "armRpm": "https://blog.yydy.link",
+      "amdOther": "https://blog.yydy.link",
+      "armOther": "https://blog.yydy.link"
     },
-    "ios": "https://apps.apple.com/us/app/cisco-secure-client/id1135064690",
+    "ios": "",
     "android": {
-      "latest": "",
-      "old": ""
-    }
+      "latest": "https://blog.yydy.link",
+      "old": "https://blog.yydy.link"
+    },
+    "harmony": "https://appgallery.huawei.com/Featured"
   },
   "manuals": {
-    "windows": "",
-    "macos": "",
-    "linux": "",
-    "ios": "",
-    "android": ""
+    "windows": "https://blog.yydy.link/archives/1697.html",
+    "macos": {
+      "appStore": "https://blog.yydy.link/archives/1699.html",
+      "dmg": "https://blog.yydy.link/archives/1698.html"
+    },
+    "linux": {
+      "server": "https://www.cisco.com/c/zh_cn/support/docs/smb/routers/cisco-rv-series-small-business-routers/Kmgmt-785-AnyConnect-Linux-Ubuntu.html",
+      "desktop": "https://www.cisco.com/c/zh_cn/support/docs/smb/routers/cisco-rv-series-small-business-routers/kmgmt-2597-Installing-AnyConnect-Linux-Ubuntu-desktop-User-Interface.html"
+    },
+    "ios": "https://blog.yydy.link/archives/1700.html",
+    "android": {
+      "latest": "https://blog.yydy.link/archives/1603.html",
+      "old": "https://blog.yydy.link/archives/1602.html"
+    },
+    "harmony": "https://appgallery.huawei.com/Featured"
   },
   "qrcodes": {
-    "ios": "",
-    "android": ""
+    "ios": "img/ERP.png",
+    "android": "img/huawei.png",
+    "consulting": "img/qiweiqr.png"
   },
-  "otherClients": []
+  "openConnectClients": [
+    {
+      "name": "Windows GUI",
+      "os": "XP 及以上",
+      "url": "https://pan.yydy.link:2023/d/share/anyconnectvpn/openconnect/openconnect-gui-1.6.2-win64.exe",
+      "manual": "https://blog.yydy.link/archives/1702.html",
+      "icon": "fa-windows",
+      "qrCode": "",
+      "type": "openConnect"
+    },
+    {
+      "name": "macOS GUI 安装板（DMG）",
+      "os": "10.13 及以上",
+      "url": "https://pan.yydy.link:2023/d/share/anyconnectvpn/openconnect/openconnect-gui-1.5.1.dmg",
+      "manual": "https://blog.yydy.link/archives/2020.html",
+      "icon": "fa-apple",
+      "qrCode": "",
+      "type": "openConnect"
+    },
+    {
+      "name": "macOS GUI 免安装版（tar.gz）",
+      "os": "10.13 及以上",
+      "url": "https://pan.yydy.link:2023/d/share/anyconnectvpn/openconnect/openconnect-gui-1.5.3.high_sierra.bottle.tar.gz",
+      "manual": "https://blog.yydy.link/archives/2021.html",
+      "icon": "fa-windows",
+      "qrCode": "",
+      "type": "openConnect"
+    },
+    {
+      "name": "Linux CLI",
+      "os": "推荐：apt/yum install openconnect",
+      "url": "https://pan.yydy.link:2023/d/share/anyconnectvpn/openconnect/openconnect-9.12.tar.gz",
+      "manual": "https://blog.yydy.link/archives/2019.html",
+      "icon": "fa-linux",
+      "qrCode": "",
+      "type": "openConnect"
+    },
+    {
+      "name": "Android GUI",
+      "os": "5.0 及以上",
+      "url": "https://pan.yydy.link:2023/d/share/anyconnectvpn/openconnect/OpenConnect.apk",
+      "manual": "https://blog.yydy.link/archives/1701.html",
+      "icon": "fa-android",
+      "qrCode": "",
+      "type": "openConnect"
+    },
+    {
+      "name": "HarmonyOS",
+      "os": "暂无",
+      "url": "https://cisco.yydy.link",
+      "manual": "https://cisco.yydy.link",
+      "icon": "fa-mobile",
+      "qrCode": "",
+      "type": "openConnect"
+    }
+  ],
+  "customClients": [
+    {
+      "name": "AnyLink Windows",
+      "os": "Windows 10 及以上（AMD）",
+      "url": "https://pan.yydy.link:2023/d/share/anyconnectvpn/anylink/AnyLink%20Secure%20Client/AnyLink%20Secure%20Client/anylink-windows10-amd64.exe",
+      "manual": "https://github.com/bjdgyc/anylink",
+      "icon": "fa-windows",
+      "qrCode": "",
+      "type": "custom"
+    },
+    {
+      "name": "AnyLink Windows",
+      "os": "Windows 10 及以上（x86）",
+      "url": "https://pan.yydy.link:2023/d/share/anyconnectvpn/anylink/AnyLink%20Secure%20Client/AnyLink%20Secure%20Client/anylink-windows10-x86.exe",
+      "manual": "https://github.com/bjdgyc/anylink",
+      "icon": "fa-windows",
+      "qrCode": "",
+      "type": "custom"
+    },
+    {
+      "name": "AnyLink macOS GUI（DMG）",
+      "os": "macOS AMD64",
+      "url": "https://pan.yydy.link:2023/d/share/anyconnectvpn/anylink/AnyLink%20Secure%20Client/AnyLink%20Secure%20Client/anylink-v0.9.5-macOS-amd64.dmg",
+      "manual": "https://github.com/bjdgyc/anylink",
+      "icon": "fa-apple",
+      "qrCode": "",
+      "type": "custom"
+    },
+    {
+      "name": "AnyLink macOS GUI（DMG）",
+      "os": "macOS ARM64",
+      "url": "https://pan.yydy.link:2023/d/share/anyconnectvpn/anylink/AnyLink%20Secure%20Client/AnyLink%20Secure%20Client/anylink-v0.9.5-macOS-arm64.dmg",
+      "manual": "https://github.com/bjdgyc/anylink",
+      "icon": "fa-apple",
+      "qrCode": "",
+      "type": "custom"
+    },
+    {
+      "name": "AnyLink Linux",
+      "os": "主流发新版",
+      "url": "https://pan.yydy.link:2023/d/share/anyconnectvpn/anylink/AnyLink%20Secure%20Client/AnyLink%20Secure%20Client/anylink-v0.9.5-linux-amd64.tar.gz",
+      "manual": "https://github.com/bjdgyc/anylink",
+      "icon": "fa-linux",
+      "qrCode": "",
+      "type": "custom"
+    }
+  ],
+  "headerNav": {
+    "btn1": {
+      "text": "飞将咨询",
+      "visible": true,
+      "url": "https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png"
+    },
+    "btn2": {
+      "text": "飞将官网",
+      "visible": true,
+      "url": "https://www.feijiangkeji.com"
+    },
+    "btn3": {
+      "text": "作者博客",
+      "visible": true,
+      "url": "https://blog.yydy.link"
+    }
+  },
+  "banner": {
+    "visible": true,
+    "image": "img/feijiangkeji.png",
+    "link": "https://www.feijiangkeji.com",
+    "text1": "飞将一站式IT办公平台，为企业提供安全的远程访问解决方案。",
+    "text2": "价格实惠，安全可靠",
+    "text3": "提供免费的专家协助、1对1 VIP指导与网络咨询服务",
+    "text4": "全面兼容多平台，支持灵活的多节点部署，无公网IP亦可免费使用内网穿透。"
+  }
 }

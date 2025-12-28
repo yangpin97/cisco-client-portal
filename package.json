@@ -16,7 +16,10 @@
     "multer": "^1.4.5-lts.1"
   },
   "pkg": {
-    "targets": ["linux-x64", "win-x64"],
+    "targets": [
+      "node18-linux-x64",
+      "node18-win-x64"
+    ],
     "outputPath": "dist",
     "assets": [
       "public/index.html",
@@ -26,7 +29,11 @@
       "public/img",
       "public/fonts",
       "public/**/*",
-      "uploads/**/*"
+      "uploads/**/*",
+      "data.json"
     ]
+  },
+  "devDependencies": {
+    "pkg": "^5.8.1"
   }
 }

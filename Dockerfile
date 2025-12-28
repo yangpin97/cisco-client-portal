@@ -1,20 +1,22 @@
-FROM node:18-alpine
+FROM docker.m.daocloud.io/node:18-alpine
 
 WORKDIR /app
 
+# Copy dependency definitions
 COPY package*.json ./
 
+# Install production dependencies
 RUN npm install --production
 
+# Copy source code
 COPY . .
 
-RUN mkdir -p /app/uploads && chmod 777 /app/uploads
-RUN mkdir -p /app/data && chmod 777 /app/data
+# Ensure directories exist and have correct permissions
+# public/img for uploads
+RUN mkdir -p /app/public/img && chmod 777 /app/public/img
 
-RUN if [ ! -f /app/data.json ]; then \
-    cp /app/public/img/ios-qr.png /app/public/img/android-qr.png /app/data/ 2>/dev/null; \
-  fi
-
+# Expose the application port
 EXPOSE 9907
 
+# Start the application
 CMD ["node", "server.js"]
