@@ -91,7 +91,7 @@
       "type": "openConnect"
     },
     {
-      "name": "macOS GUI 安装板（DMG）",
+      "name": "macOS GUI 安装版（DMG）",
       "os": "10.13 及以上",
       "url": "https://pan.yydy.link:2023/d/share/anyconnectvpn/openconnect/openconnect-gui-1.5.1.dmg",
       "manual": "https://blog.yydy.link/archives/2020.html",
