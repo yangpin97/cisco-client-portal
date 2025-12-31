@@ -141,7 +141,7 @@
       "name": "AnyLink Windows",
       "os": "Windows 10 及以上（AMD）",
       "url": "https://pan.yydy.link:2023/d/share/anyconnectvpn/anylink/AnyLink%20Secure%20Client/AnyLink%20Secure%20Client/anylink-windows10-amd64.exe",
-      "manual": "https://github.com/bjdgyc/anylink",
+      "manual": "https://github.com/tlslink/anylink-client",
       "icon": "fa-windows",
       "qrCode": "",
       "type": "custom"
@@ -150,7 +150,7 @@
       "name": "AnyLink Windows",
       "os": "Windows 10 及以上（x86）",
       "url": "https://pan.yydy.link:2023/d/share/anyconnectvpn/anylink/AnyLink%20Secure%20Client/AnyLink%20Secure%20Client/anylink-windows10-x86.exe",
-      "manual": "https://github.com/bjdgyc/anylink",
+      "manual": "https://github.com/tlslink/anylink-client",
       "icon": "fa-windows",
       "qrCode": "",
       "type": "custom"
@@ -159,7 +159,7 @@
       "name": "AnyLink macOS GUI（DMG）",
       "os": "macOS AMD64",
       "url": "https://pan.yydy.link:2023/d/share/anyconnectvpn/anylink/AnyLink%20Secure%20Client/AnyLink%20Secure%20Client/anylink-v0.9.5-macOS-amd64.dmg",
-      "manual": "https://github.com/bjdgyc/anylink",
+      "manual": "https://github.com/tlslink/anylink-client",
       "icon": "fa-apple",
       "qrCode": "",
       "type": "custom"
@@ -168,7 +168,7 @@
       "name": "AnyLink macOS GUI（DMG）",
       "os": "macOS ARM64",
       "url": "https://pan.yydy.link:2023/d/share/anyconnectvpn/anylink/AnyLink%20Secure%20Client/AnyLink%20Secure%20Client/anylink-v0.9.5-macOS-arm64.dmg",
-      "manual": "https://github.com/bjdgyc/anylink",
+      "manual": "https://github.com/tlslink/anylink-client",
       "icon": "fa-apple",
       "qrCode": "",
       "type": "custom"
@@ -177,7 +177,7 @@
       "name": "AnyLink Linux",
       "os": "主流发新版",
       "url": "https://pan.yydy.link:2023/d/share/anyconnectvpn/anylink/AnyLink%20Secure%20Client/AnyLink%20Secure%20Client/anylink-v0.9.5-linux-amd64.tar.gz",
-      "manual": "https://github.com/bjdgyc/anylink",
+      "manual": "https://github.com/tlslink/anylink-client",
       "icon": "fa-linux",
       "qrCode": "",
       "type": "custom"
