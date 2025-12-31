@@ -18,7 +18,7 @@
     "headerBtn3Text": "博客站",
     "headerBtn3Url": "https://blog.yydy.link",
     "headerBtn3Visible": true,
-    "vpnVersion": "v5.1.1.145",
+    "vpnVersion": "v5.1.14.145",
     "uiVersion": "v5.1.14.1452",
     "updateDate": "2025 年 12 月 25 号",
     "heroBtnText": "立即下载",
@@ -76,9 +76,9 @@
     "harmony": "https://appgallery.huawei.com/Featured"
   },
   "qrcodes": {
-    "ios": "img/ERP.png",
-    "android": "img/huawei.png",
-    "consulting": "img/qiweiqr.png"
+    "ios": "",
+    "android": "",
+    "consulting": ""
   },
   "openConnectClients": [
     {
@@ -104,7 +104,7 @@
       "os": "10.13 及以上",
       "url": "https://pan.yydy.link:2023/d/share/anyconnectvpn/openconnect/openconnect-gui-1.5.3.high_sierra.bottle.tar.gz",
       "manual": "https://blog.yydy.link/archives/2021.html",
-      "icon": "fa-windows",
+      "icon": "fa-apple",
       "qrCode": "",
       "type": "openConnect"
     },
